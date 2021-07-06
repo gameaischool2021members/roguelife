@@ -1,5 +1,5 @@
 # This file should contain rendering and input handling
-
+import sys
 import pygame as pg
 import numpy as np
 import random
