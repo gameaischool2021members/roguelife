@@ -153,7 +153,8 @@ class Arrow:
 
         if self.x not in range(0, self.world.width) or \
            self.y not in range(0, self.world.height) or \
-           self.world.map_tree[self.x][self.y] == 1:
+           self.world.map_tree[self.x][self.y] == 1 or \
+           self.world.map_rock[self.x][self.y] == 1:
             self.active = False
         
         for enemy in self.world.enemies:
