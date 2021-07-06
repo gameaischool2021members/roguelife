@@ -5,13 +5,10 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 
 from game.game import Game
 
-# Will not run atm.
-# TODO: add state encoder (grayscale, scale down, etc..) needed for replay buffer
-
 env = DummyVecEnv([lambda: Game()])
 
-model = DQN("CnnPolicy", env, verbose=1, buffer_size=1000)
-model.learn(total_timesteps=100000, log_interval=100)
+model = DQN("CnnPolicy", env, verbose=1, buffer_size=10000, learning_starts=5000, exploration_fraction=0.3)
+model.learn(total_timesteps=100000, log_interval=4)
 
 obs = env.reset()
 while True:

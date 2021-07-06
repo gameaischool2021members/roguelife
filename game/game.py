@@ -6,7 +6,7 @@ import random
 import gym
 import noise
 from .gman import GraphicsManager
-from PIL import Image
+from PIL import Image, ImageOps
 from .generator import WorldGenerator
 
 
@@ -17,10 +17,11 @@ class Game(gym.Env):
         self.framerate = 0
         self.width, self.height = (15, 15)
         self.scale = 32
+        self.encoder_scale = 1 / 4
 
         self.action_space = gym.spaces.Discrete(6)
         self.observation_space = gym.spaces.Box(low=0, high=255,
-                                                shape=(self.height * self.scale, self.width * self.scale, 4),
+                                                shape=(1, 120, 120),
                                                 dtype=np.uint8)
 
         pg.init()
@@ -45,7 +46,7 @@ class Game(gym.Env):
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))
 
-        return np.asarray(pil_image), reward, done, {}
+        return self.encode_state(pil_image), reward, done, {}
 
     def render(self, mode='human'):
         # Background
@@ -80,4 +81,11 @@ class Game(gym.Env):
 
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))
-        return np.asarray(pil_image)
+        return self.encode_state(pil_image)
+
+    def encode_state(self, img_state):
+        img_state = ImageOps.grayscale(img_state)
+        img_state = ImageOps.scale(img_state, self.encoder_scale)
+        img_state = np.asarray(img_state)
+        img_state = np.expand_dims(img_state, axis=0)
+        return img_state
