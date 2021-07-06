@@ -51,6 +51,8 @@ class Game(gym.Env):
                 pg.draw.rect(self.screen, (64, (128 + self.world.map_grass[i][j] * 128) % 256, 64), (i * self.scale, j * self.scale, self.scale, self.scale))
                 if self.world.map_tree[i][j] == 1:
                     self.screen.blit(self.gman.sprites['tree'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
+                if self.world.map_rock[i][j] == 1:
+                    self.screen.blit(self.gman.sprites['rock'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
         
         self.screen.blit(self.gman.sprites['person'], (self.world.player.x * self.scale, self.world.player.y * self.scale), (0, 0, self.scale, self.scale))
         for enemy in self.world.enemies:

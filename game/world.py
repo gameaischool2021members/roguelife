@@ -20,6 +20,7 @@ class World:
 
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
+        self.map_rock = np.zeros((self.width, self.height))
         self.generate_world()
 
         self.enemies = []
@@ -58,7 +59,8 @@ class World:
 
         for i in range(self.width):
             for j in range(self.height):
-                self.map_grass[i][j] = noise.pnoise2(
+
+                self.map_rock[i][j] = noise.pnoise2(
                     i / scale, 
                     j / scale, 
                     octaves=octaves, 
@@ -69,10 +71,25 @@ class World:
                     base=0
                 )
                 if self.spawn_point != (i, j) and random.uniform(0, 1) < .1:
+                    self.map_rock[i][j] = 1
+
+                self.map_grass[i][j] = noise.pnoise2(
+                    i / scale, 
+                    j / scale, 
+                    octaves=octaves, 
+                    persistence=persistence, 
+                    lacunarity=lacunarity, 
+                    repeatx=self.width, 
+                    repeaty=self.height, 
+                    base=0
+                )
+                if self.spawn_point != (i, j) and self.map_rock[i][j] != 1 and random.uniform(0, 1) < .1:
                     self.map_tree[i][j] = 1
+
+                
     
     def is_pos_free(self, pos):
-        return self.map_tree[pos[0]][pos[1]] != 1
+        return self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
