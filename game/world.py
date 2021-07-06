@@ -21,14 +21,9 @@ class World:
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
         self.map_rock = np.zeros((self.width, self.height))
-        self.generate_world()
 
-        self.enemies = []
-        for _ in range(5):
-            pos = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
-            while self.map_tree[pos[0]][pos[1]] == 1:
-                pos = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
-            self.enemies.append(Character(pos, self))
+
+        
 
     def step(self, action):        
         if action == self.game.A_ATK:
@@ -49,44 +44,7 @@ class World:
         
         return reward, done
 
-    def generate_world(self):
-        # Simple perlin noise
 
-        scale = 10
-        octaves = 6
-        persistence = 0.5
-        lacunarity = 2.0
-
-        for i in range(self.width):
-            for j in range(self.height):
-
-                self.map_rock[i][j] = noise.pnoise2(
-                    i / scale, 
-                    j / scale, 
-                    octaves=octaves, 
-                    persistence=persistence, 
-                    lacunarity=lacunarity, 
-                    repeatx=self.width, 
-                    repeaty=self.height, 
-                    base=0
-                )
-                if self.spawn_point != (i, j) and random.uniform(0, 1) < .1:
-                    self.map_rock[i][j] = 1
-
-                self.map_grass[i][j] = noise.pnoise2(
-                    i / scale, 
-                    j / scale, 
-                    octaves=octaves, 
-                    persistence=persistence, 
-                    lacunarity=lacunarity, 
-                    repeatx=self.width, 
-                    repeaty=self.height, 
-                    base=0
-                )
-                if self.spawn_point != (i, j) and self.map_rock[i][j] != 1 and random.uniform(0, 1) < .1:
-                    self.map_tree[i][j] = 1
-
-                
     
     def is_pos_free(self, pos):
         return self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1
