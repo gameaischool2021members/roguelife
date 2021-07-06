@@ -1,5 +1,5 @@
 
-from env.game import Game
+from game.game import Game
 import random 
 
 env = Game()
