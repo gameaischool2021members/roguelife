@@ -7,7 +7,6 @@ from game.game import Game
 
 # Will not run atm.
 # TODO: add state encoder (grayscale, scale down, etc..) needed for replay buffer
-# TODO: add everything needed in the env by running
 
 env = DummyVecEnv([lambda: Game()])
 

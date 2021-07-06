@@ -20,7 +20,7 @@ class Game(gym.Env):
 
         self.action_space = gym.spaces.Discrete(6)
         self.observation_space = gym.spaces.Box(low=0, high=255,
-                                                shape=(3, self.height * self.scale, self.width * self.scale),
+                                                shape=(self.height * self.scale, self.width * self.scale, 4),
                                                 dtype=np.uint8)
 
         pg.init()
@@ -45,7 +45,7 @@ class Game(gym.Env):
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))
 
-        return pil_image, reward, done, {}
+        return np.asarray(pil_image), reward, done, {}
 
     def render(self, mode='human'):
         # Background
@@ -73,3 +73,11 @@ class Game(gym.Env):
         pg.display.flip()
 
         self.clock.tick(int(self.framerate))
+
+    def reset(self):
+        self.world = WorldGenerator(self).get_world()
+        self.render()
+
+        pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
+                                    pg.image.tostring(self.screen, "RGBA", False))
+        return np.asarray(pil_image)
