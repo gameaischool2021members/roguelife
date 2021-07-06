@@ -26,10 +26,10 @@ class Game(gym.Env):
         self.clock = pg.time.Clock()
 
 
-        initial_rock_density = 0.1
+        initial_rock_density = 0.2
         initial_tree_density = 0.1
         rock_refinement_runs = 1
-        tree_refinement_runs = 1
+        tree_refinement_runs = 0
         rock_neighbour_depth = 1
         tree_neighbour_depth = 1
         rock_neighbour_number = 3

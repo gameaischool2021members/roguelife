@@ -7,7 +7,7 @@ class WorldGenerator:
     def __init__(self, game):
         self.game = game
 
-    def get_position_neighbors(self, i, j, depth):
+    def get_position_neighbours(self, world, matrix, i, j, depth):
 
         neighbours = []
 
@@ -15,16 +15,19 @@ class WorldGenerator:
             print("Depth variable needs to be greater than 0")
             exit()
 
+        for n_i in range(i - depth, i + depth + 1):
+            for n_j in range(j - depth, j + depth + 1):
 
-        for n_i in range(i - depth, i + depth):
-            for n_j in range(j - depth, j + depth):
 
-                if n_i < 0 or n_i > self.world.height:
+                if n_i < 0 or n_i >= world.height:
                     continue
-                if n_j < 0 or n_j > self.world.height:
+                if n_j < 0 or n_j >= world.height:
+                    continue
+                if n_i == i and n_j == j:
                     continue
 
-                neighbours.append([n_i, n_j])
+                if matrix[n_i][n_j]:
+                    neighbours.append([n_i, n_j])
 
         return neighbours
 
@@ -34,15 +37,22 @@ class WorldGenerator:
         for i in range(world.width):
             for j in range(world.height):
 
-
                 if world.spawn_point != (i, j) and random.uniform(0, 1) < initial_rock_density:
                     world.map_rock[i][j] = 1
 
-
-        # for run in rock_refinement_runs:
-        #     for i in range(world.width):
-        #         for j in range(world.height):
-        #             neighbours = 
+        for run in range(rock_refinement_runs):
+            to_add = []
+            to_remove = []
+            for i in range(world.width):
+                for j in range(world.height):
+                    if (len(self.get_position_neighbours(world, world.map_rock, i, j, rock_neighbour_depth)) >= rock_neighbour_number) and world.spawn_point != (i, j):
+                        to_add.append([i, j])
+                    else:
+                        to_remove.append([i,j])
+            for cord in to_add:
+                world.map_rock[cord[0]][cord[1]] = 1
+            for cord in to_remove:
+                world.map_rock[cord[0]][cord[1]] = 0
 
         return
 
@@ -51,9 +61,23 @@ class WorldGenerator:
 
         for i in range(world.width):
             for j in range(world.height):
-                if world.spawn_point != (i, j) and world.map_rock[i][j] != 1 and random.uniform(0, 1) < initial_tree_density:
+
+                if world.spawn_point != (i, j) and random.uniform(0, 1) < initial_tree_density and world.map_rock[i][j] != 1:
                     world.map_tree[i][j] = 1
 
+        for run in range(tree_refinement_runs):
+            to_add = []
+            to_remove = []
+            for i in range(world.width):
+                for j in range(world.height):
+                    if (len(self.get_position_neighbours(world, world.map_tree, i, j, tree_neighbour_depth)) >= tree_neighbour_number) and world.map_rock[i][j] != 1 and world.spawn_point != (i, j):
+                        to_add.append([i, j])
+                    else:
+                        to_remove.append([i,j])
+            for cord in to_add:
+                world.map_tree[cord[0]][cord[1]] = 1
+            for cord in to_remove:
+                world.map_tree[cord[0]][cord[1]] = 0
 
         return
 
