@@ -7,6 +7,7 @@ import numpy as np
 import random
 import noise
 
+
 class World:
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
@@ -29,23 +30,26 @@ class World:
                 pos = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
             self.enemies.append(Character(pos, self))
 
-    def step(self, action):        
+    def step(self, action):
         if action == self.game.A_ATK:
-            self.arrows.append(Arrow((self.player.x, self.player.y), self.player.facing, self))    
+            self.arrows.append(Arrow((self.player.x, self.player.y), self.player.facing, self))
         else:
             self.player.move(action)
 
         for arrow in self.arrows:
             arrow.move()
         self.arrows = list(filter(lambda x: x.active, self.arrows))
-        
+
         n_enemies = len(self.enemies)
         for enemy in self.enemies:
             enemy.move(random.choice([self.game.A_UP, self.game.A_DOWN, self.game.A_LEFT, self.game.A_RIGHT]))
         self.enemies = list(filter(lambda x: x.active, self.enemies))
         reward = n_enemies - len(self.enemies)
-        done = False
-        
+        if len(self.enemies) == 0:
+            done = True
+        else:
+            done = False
+
         return reward, done
 
     def generate_world(self):
@@ -59,20 +63,21 @@ class World:
         for i in range(self.width):
             for j in range(self.height):
                 self.map_grass[i][j] = noise.pnoise2(
-                    i / scale, 
-                    j / scale, 
-                    octaves=octaves, 
-                    persistence=persistence, 
-                    lacunarity=lacunarity, 
-                    repeatx=self.width, 
-                    repeaty=self.height, 
+                    i / scale,
+                    j / scale,
+                    octaves=octaves,
+                    persistence=persistence,
+                    lacunarity=lacunarity,
+                    repeatx=self.width,
+                    repeaty=self.height,
                     base=0
                 )
                 if self.spawn_point != (i, j) and random.uniform(0, 1) < .1:
                     self.map_tree[i][j] = 1
-    
+
     def is_pos_free(self, pos):
         return self.map_tree[pos[0]][pos[1]] != 1
+
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -99,7 +104,7 @@ class Character:
                 target_pos = (self.x, (self.y + 1) % self.world.height)
             else:
                 self.facing = self.DIR_S
-        
+
         if action == self.world.game.A_LEFT:
             if self.facing == self.DIR_W:
                 target_pos = ((self.x - 1) % self.world.width, self.y)
@@ -111,9 +116,10 @@ class Character:
                 target_pos = ((self.x + 1) % self.world.width, self.y)
             else:
                 self.facing = self.DIR_E
-            
+
         if self.world.is_pos_free(target_pos):
             self.x, self.y = target_pos
+
 
 class Arrow:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -125,7 +131,7 @@ class Arrow:
         self.active = True
 
     def move(self):
-        if self.facing == Arrow.DIR_S: 
+        if self.facing == Arrow.DIR_S:
             self.y += 1
         if self.facing == Arrow.DIR_W:
             self.x -= 1
@@ -135,15 +141,16 @@ class Arrow:
             self.x += 1
 
         if self.x not in range(0, self.world.width) or \
-           self.y not in range(0, self.world.height) or \
-           self.world.map_tree[self.x][self.y] == 1:
+                self.y not in range(0, self.world.height) or \
+                self.world.map_tree[self.x][self.y] == 1:
             self.active = False
-        
+
         for enemy in self.world.enemies:
             if self.x == enemy.x and self.y == enemy.y:
                 enemy.active = False
                 self.active = False
-            
+
+
 """
     def get_sprite(self):
         if self.facing == Arrow.DIR_S: 

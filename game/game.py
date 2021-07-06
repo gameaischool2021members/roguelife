@@ -9,6 +9,7 @@ from .gman import GraphicsManager
 from PIL import Image
 from .generator import WorldGenerator
 
+
 class Game(gym.Env):
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
@@ -18,13 +19,16 @@ class Game(gym.Env):
         self.scale = 32
 
         self.action_space = gym.spaces.Discrete(6)
+        self.observation_space = gym.spaces.Box(low=0, high=255,
+                                                shape=(3, self.height * self.scale, self.width * self.scale),
+                                                dtype=np.uint8)
 
         pg.init()
         self.screen = pg.display.set_mode((self.width * self.scale, self.height * self.scale))
         self.gman = GraphicsManager(self.scale)
 
         self.clock = pg.time.Clock()
-        
+
         self.world = WorldGenerator(self).get_world()
 
     def step(self, action):
@@ -33,32 +37,39 @@ class Game(gym.Env):
                 pg.quit()
                 sys.exit()
         pg.event.pump()
-        
+
         reward, done = self.world.step(action)
 
         self.render()
-        
-        pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height), pg.image.tostring(self.screen,"RGBA", False))
-        
+
+        pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
+                                    pg.image.tostring(self.screen, "RGBA", False))
+
         return pil_image, reward, done, {}
 
     def render(self, mode='human'):
         # Background
         pg.draw.rect(self.screen, (24, 24, 24), (0, 0, self.width * self.scale, self.height * self.scale))
-        
+
         for i in range(self.width):
             for j in range(self.height):
-                pg.draw.rect(self.screen, (64, (128 + self.world.map_grass[i][j] * 128) % 256, 64), (i * self.scale, j * self.scale, self.scale, self.scale))
+                pg.draw.rect(self.screen, (64, (128 + self.world.map_grass[i][j] * 128) % 256, 64),
+                             (i * self.scale, j * self.scale, self.scale, self.scale))
                 if self.world.map_tree[i][j] == 1:
-                    self.screen.blit(self.gman.sprites['tree'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
-        
-        self.screen.blit(self.gman.sprites['person'], (self.world.player.x * self.scale, self.world.player.y * self.scale), (0, 0, self.scale, self.scale))
+                    self.screen.blit(self.gman.sprites['tree'], (i * self.scale, j * self.scale),
+                                     (0, 0, self.scale, self.scale))
+
+        self.screen.blit(self.gman.sprites['person'],
+                         (self.world.player.x * self.scale, self.world.player.y * self.scale),
+                         (0, 0, self.scale, self.scale))
         for enemy in self.world.enemies:
-            self.screen.blit(self.gman.sprites['skeleton'], (enemy.x * self.scale, enemy.y * self.scale), (0, 0, self.scale, self.scale))
+            self.screen.blit(self.gman.sprites['skeleton'], (enemy.x * self.scale, enemy.y * self.scale),
+                             (0, 0, self.scale, self.scale))
 
         for arrow in self.world.arrows:
-            self.screen.blit(self.gman.sprites['arrow'], (arrow.x * self.scale, arrow.y * self.scale), (0, 0, self.scale, self.scale))
-        
+            self.screen.blit(self.gman.sprites['arrow'], (arrow.x * self.scale, arrow.y * self.scale),
+                             (0, 0, self.scale, self.scale))
+
         pg.display.flip()
-        
+
         self.clock.tick(int(self.framerate))
