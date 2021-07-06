@@ -24,8 +24,18 @@ class Game(gym.Env):
         self.gman = GraphicsManager(self.scale)
 
         self.clock = pg.time.Clock()
-        
-        self.world = WorldGenerator(self).get_world()
+
+
+        initial_rock_density = 0.1
+        initial_tree_density = 0.1
+        rock_refinement_runs = 1
+        tree_refinement_runs = 1
+        rock_neighbour_depth = 1
+        tree_neighbour_depth = 1
+        rock_neighbour_number = 3
+        tree_neighbour_number = 3
+
+        self.world = WorldGenerator(self).get_world(initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number)
 
     def step(self, action):
         for event in pg.event.get():
