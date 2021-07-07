@@ -5,7 +5,7 @@ class EvoAlg:
     def __init__(self, spec):
         # Tuning parameters
         self.spec = spec
-        self.population_size = 100
+        self.population_size = 10
         self.truncation_selection = int(self.population_size * .2)
         self.mutation_rate = .01
 
@@ -19,6 +19,8 @@ class EvoAlg:
                     individual[key] = random.uniform(self.spec[key]['min'], self.spec[key]['max'])
                 if self.spec[key]['dtype'] == int:
                     individual[key] = random.randint(self.spec[key]['min'], self.spec[key]['max'])
+                if self.spec[key]['dtype'] == bool:
+                    individual[key] = True
             pop.append(individual)
         return pop
 
@@ -38,6 +40,8 @@ class EvoAlg:
                         temp[key] = random.uniform(self.spec[key]['min'], self.spec[key]['max'])
                     if self.spec[key]['dtype'] == int:
                         temp[key] = random.randint(self.spec[key]['min'], self.spec[key]['max'])
+                    if self.spec[key]['dtype'] == bool:
+                        individual[key] = True
             new_pop.append(temp)
         
         return new_pop

@@ -12,10 +12,11 @@ from .generator import WorldGenerator
 class Game(gym.Env):
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
-    def __init__(self):
+    def __init__(self, evo_system=None):
         self.framerate = 10
         self.width, self.height = (15, 15)
         self.scale = 32
+        self.fitness = 0
 
         self.action_space = gym.spaces.Discrete(6)
 
@@ -25,44 +26,12 @@ class Game(gym.Env):
 
         self.clock = pg.time.Clock()
 
-
-        initial_rock_density = 0.25
-        initial_tree_density = 0.3
-        rock_refinement_runs = 2
-        tree_refinement_runs = 4
-        rock_neighbour_depth = 1
-        tree_neighbour_depth = 1
-        rock_neighbour_number = 3
-        tree_neighbour_number = 3
-
-        base_clear_depth = 1
-
-        enemies_crush_trees = True
-
-        self.world = WorldGenerator(self).get_world(initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth, enemies_crush_trees)
+        self.worldgen = WorldGenerator(self, evo_system) 
+        self.world = self.worldgen.get_world()
 
     def reset(self):
-        self.clock = pg.time.Clock()
-
-        # TODO : We need to have the parameter changing somewhere, either as inputs or as a call to something
-
-        initial_rock_density = 0.25
-        initial_tree_density = 0.3
-        rock_refinement_runs = 2
-        tree_refinement_runs = 4
-        rock_neighbour_depth = 1
-        tree_neighbour_depth = 1
-        rock_neighbour_number = 3
-        tree_neighbour_number = 3
-
-        base_clear_depth = 1
-
-        enemies_crush_trees = True
-
-        self.world = WorldGenerator(self).get_world(initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth, enemies_crush_trees)
-
-
-
+        self.world = self.worldgen.get_world()
+    
     def step(self, action):
         for event in pg.event.get():
             if event.type == pg.QUIT:
@@ -71,11 +40,15 @@ class Game(gym.Env):
         pg.event.pump()
         
         reward, done = self.world.step(action)
+        
+        if done:
+            if not self.world.map_base[self.world.base_x][self.world.base_y]:
+                self.fitness += 1
+            self.worldgen.register_fitness(self.fitness)
 
         self.render()
         
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height), pg.image.tostring(self.screen,"RGBA", False))
-
         
         return pil_image, reward, done, {}
 

@@ -18,14 +18,10 @@ class World:
         self.player = Character(self.spawn_point, self)
         self.arrows = []
 
-
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
         self.map_rock = np.zeros((self.width, self.height))
         self.map_base = np.zeros((self.width, self.height))
-
-
-        
 
     def step(self, action):        
         if action == self.game.A_ATK:
