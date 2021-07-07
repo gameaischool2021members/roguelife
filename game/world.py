@@ -48,7 +48,7 @@ class World:
 
     
     def is_pos_free(self, pos):
-        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and not self.map_tree[pos[0]][pos[1]] and self.map_rock[pos[0]][pos[1]] != 1 and self.map_base[pos[0]][pos[1]] != 1
+        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and not self.map_tree[pos[0]][pos[1]] and self.map_rock[pos[0]][pos[1]] != 1 and not self.map_base[pos[0]][pos[1]]
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -90,6 +90,9 @@ class Character:
             
         if self.world.is_pos_free(target_pos):
             self.x, self.y = target_pos
+            return None
+        else:
+            return target_pos
 
 class Arrow:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)

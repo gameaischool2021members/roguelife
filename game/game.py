@@ -37,7 +37,9 @@ class Game(gym.Env):
 
         base_clear_depth = 1
 
-        self.world = WorldGenerator(self).get_world(initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth)
+        enemies_crush_trees = True
+
+        self.world = WorldGenerator(self).get_world(initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth, enemies_crush_trees)
 
     def step(self, action):
         for event in pg.event.get():

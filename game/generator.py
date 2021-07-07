@@ -136,7 +136,7 @@ class WorldGenerator:
 
         chosen_one = random.choice(possibilities)
 
-        world.map_base[chosen_one[0]][chosen_one[1]] = 1
+        world.map_base[chosen_one[0]][chosen_one[1]] = 10
         
         world.base_x, world.base_y = chosen_one 
         
@@ -156,7 +156,7 @@ class WorldGenerator:
         return
 
 
-    def get_world(self, initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth) :
+    def get_world(self, initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth, enemies_crush_trees) :
 
         world = World(self.game)
 
@@ -189,7 +189,7 @@ class WorldGenerator:
             pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
             while world.map_tree[pos[0]][pos[1]] or world.map_rock[pos[0]][pos[1]]:
                 pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
-            world.enemies.append(EnemyController(Character(pos, world), world))
+            world.enemies.append(EnemyController(Character(pos, world), world, enemies_crush_trees))
 
         return world
 
