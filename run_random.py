@@ -1,6 +1,7 @@
 
 from game.game import Game
 import random 
+import time
 
 env = Game()
 
