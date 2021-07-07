@@ -21,6 +21,7 @@ class World:
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
         self.map_rock = np.zeros((self.width, self.height))
+        self.map_base = np.zeros((self.width, self.height))
 
 
         
@@ -47,7 +48,7 @@ class World:
 
     
     def is_pos_free(self, pos):
-        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1
+        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1 and self.map_base[pos[0]][pos[1]] != 1
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
