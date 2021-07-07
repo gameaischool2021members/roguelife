@@ -10,6 +10,7 @@ class WorldGenerator:
     def get_position_neighbours(self, world, matrix, i, j, depth):
 
         neighbours = []
+        bordering_edges = False
 
         if depth <= 0:
             print("Depth variable needs to be greater than 0")
@@ -20,8 +21,10 @@ class WorldGenerator:
 
 
                 if n_i < 0 or n_i >= world.height:
+                    bordering_edges = True
                     continue
                 if n_j < 0 or n_j >= world.height:
+                    bordering_edges = True
                     continue
                 if n_i == i and n_j == j:
                     continue
@@ -29,7 +32,7 @@ class WorldGenerator:
                 if matrix[n_i][n_j]:
                     neighbours.append([n_i, n_j])
 
-        return neighbours
+        return neighbours, bordering_edges
 
 
     def generate_rocks(self, world, initial_rock_density, rock_refinement_runs, rock_neighbour_depth, rock_neighbour_number):
@@ -45,7 +48,8 @@ class WorldGenerator:
             to_remove = []
             for i in range(world.width):
                 for j in range(world.height):
-                    if (len(self.get_position_neighbours(world, world.map_rock, i, j, rock_neighbour_depth)) >= rock_neighbour_number) and world.spawn_point != (i, j):
+                    neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, rock_neighbour_depth)
+                    if (len(neighbors) >= rock_neighbour_number) and world.spawn_point != (i, j):
                         to_add.append([i, j])
                     else:
                         to_remove.append([i,j])
@@ -70,7 +74,8 @@ class WorldGenerator:
             to_remove = []
             for i in range(world.width):
                 for j in range(world.height):
-                    if (len(self.get_position_neighbours(world, world.map_tree, i, j, tree_neighbour_depth)) >= tree_neighbour_number) and world.map_rock[i][j] != 1 and world.spawn_point != (i, j):
+                    neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, tree_neighbour_depth)
+                    if (len(neighbors) >= tree_neighbour_number) and world.map_rock[i][j] != 1 and world.spawn_point != (i, j):
                         to_add.append([i, j])
                     else:
                         to_remove.append([i,j])
@@ -82,7 +87,51 @@ class WorldGenerator:
         return
 
 
-    def get_world(self, initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number) :
+    def generate_world_base_and_player(self, world, initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, clear_depth):
+
+        possibilities = []
+
+        counter = 0
+        while len(possibilities) == 0:
+
+            self.generate_rocks(world, initial_rock_density, rock_refinement_runs, rock_neighbour_depth, rock_neighbour_number)
+            self.generate_trees(world, initial_tree_density, tree_refinement_runs, tree_neighbour_depth, tree_neighbour_number)
+
+            for i in range(world.width):
+                for j in range(world.height):
+                    rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, clear_depth)
+                    tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, clear_depth)
+
+                    if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering):
+                            possibilities.append([i, j])
+            counter += 1
+
+            if counter > 1000:
+                print("World generation parameters don't allow a base with a clear_depth of ", clear_depth)
+                exit()
+
+
+        chosen_one = random.choice(possibilities)
+
+        world.map_base[chosen_one[0]][chosen_one[1]] = 1
+
+        player_possibilities = []
+
+        for n_i in range(chosen_one[1] - clear_depth, chosen_one[1] + clear_depth + 1):
+            for n_j in range(chosen_one[0] - clear_depth, chosen_one[0] + clear_depth + 1):
+                if n_i != i and n_j != j:
+                    player_possibilities.append([n_i, n_j])
+
+        chosen_one = random.choice(player_possibilities)
+
+        world.player.y = chosen_one[0]
+        world.player.x = chosen_one[1]
+
+
+        return
+
+
+    def get_world(self, initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth) :
 
         world = World(self.game)
 
@@ -105,12 +154,8 @@ class WorldGenerator:
                     base=0
                 )
 
-        self.generate_rocks(world, initial_rock_density, rock_refinement_runs, rock_neighbour_depth, rock_neighbour_number)
-        self.generate_trees(world, initial_tree_density, tree_refinement_runs, tree_neighbour_depth, tree_neighbour_number)
+        self.generate_world_base_and_player(world, initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number, base_clear_depth)
         
-
-
-
 
         
 
