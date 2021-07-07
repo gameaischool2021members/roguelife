@@ -111,14 +111,14 @@ class WorldGenerator:
                     rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, clear_depth)
                     tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, clear_depth)
 
-                    if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering):
+                    if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering) and not world.map_rock[i,j]:
                             possibilities.append([i, j])
 
-            structure = np.ones((3, 3), dtype=np.int)
+       
 
             inv_map = 1 - world.map_rock
 
-            labeled, ncomponents = label(inv_map, structure)
+            labeled, ncomponents = label(inv_map)
 
             if ncomponents > 1:
                 possibilities = []
@@ -187,7 +187,7 @@ class WorldGenerator:
         world.enemies = []
         for _ in range(5):
             pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
-            while world.map_tree[pos[0]][pos[1]] or world.map_rock[pos[0]][pos[1]]:
+            while not world.is_pos_free(pos):
                 pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
             world.enemies.append(EnemyController(Character(pos, world), world, enemies_crush_trees))
 
