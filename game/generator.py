@@ -1,5 +1,8 @@
 # Generator: Takes in a set of parameters, and returns a world object
+
 from .world import World, Character
+from .enemy import EnemyController
+
 import random
 import noise
 
@@ -114,7 +117,9 @@ class WorldGenerator:
         chosen_one = random.choice(possibilities)
 
         world.map_base[chosen_one[0]][chosen_one[1]] = 1
-
+        
+        world.base_x, world.base_y = chosen_one 
+        
         player_possibilities = []
 
         for n_i in range(chosen_one[1] - clear_depth, chosen_one[1] + clear_depth + 1):
@@ -164,7 +169,7 @@ class WorldGenerator:
             pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
             while world.map_tree[pos[0]][pos[1]] == 1:
                 pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
-            world.enemies.append(Character(pos, world))
+            world.enemies.append(EnemyController(Character(pos, world), world))
 
         return world
 

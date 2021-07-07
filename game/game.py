@@ -13,7 +13,7 @@ class Game(gym.Env):
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
     def __init__(self):
-        self.framerate = 0
+        self.framerate = 10
         self.width, self.height = (15, 15)
         self.scale = 32
 
@@ -69,7 +69,8 @@ class Game(gym.Env):
                     self.screen.blit(self.gman.sprites['base'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
         
         self.screen.blit(self.gman.sprites['person'], (self.world.player.x * self.scale, self.world.player.y * self.scale), (0, 0, self.scale, self.scale))
-        for enemy in self.world.enemies:
+        for enemy_controller in self.world.enemies:
+            enemy = enemy_controller.character
             self.screen.blit(self.gman.sprites['skeleton'], (enemy.x * self.scale, enemy.y * self.scale), (0, 0, self.scale, self.scale))
 
         for arrow in self.world.arrows:
