@@ -2,10 +2,13 @@ from queue import PriorityQueue
 import numpy as np
 
 class EnemyController:
-    def __init__(self, character, world):
+    def __init__(self, character, world, enemies_crush_trees):
         self.world = world
         self.character = character
-        solids = np.logical_or(self.world.map_tree, self.world.map_rock)
+        if enemies_crush_trees:
+            solids = self.world.map_rock
+        else:
+            solids = np.logical_or(self.world.map_tree, self.world.map_rock)
         
         self.gg = GridGraph((self.world.width, self.world.height), solids)
 
@@ -25,7 +28,14 @@ class EnemyController:
             if dst[1] - src[1] == -1:
                 action = self.world.game.A_UP
         
-        self.character.move(action)
+        obstacle_found = self.character.move(action)
+
+        if obstacle_found:
+            if self.world.map_tree[obstacle_found[0]][obstacle_found[1]]:
+                 self.world.map_tree[obstacle_found[0]][obstacle_found[1]] -= 1
+            if self.world.map_base[obstacle_found[0]][obstacle_found[1]]:
+                 self.world.map_base[obstacle_found[0]][obstacle_found[1]] -= 1
+
 
 class GridGraph:
     def __init__(self, dimensions, solids):
