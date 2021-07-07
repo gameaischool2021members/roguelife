@@ -1,6 +1,30 @@
 from queue import PriorityQueue
 import numpy as np
 
+class EnemyController:
+    def __init__(self, character, world):
+        self.world = world
+        self.character = character
+        self.gg = GridGraph((self.world.width, self.world.height), self.world.map_tree)
+
+    def step(self):
+        path = self.gg.get_shortest_path((self.character.x, self.character.y), (self.world.player.x, self.world.player.y))
+        action = self.world.game.A_NOP
+        
+        if path:
+            src, dst = ((self.character.x, self.character.y), path[-1])
+        
+            if dst[0] - src[0] == 1:
+                action = self.world.game.A_RIGHT
+            if dst[0] - src[0] == -1:
+                action = self.world.game.A_LEFT
+            if dst[1] - src[1] == 1:
+                action = self.world.game.A_DOWN
+            if dst[1] - src[1] == -1:
+                action = self.world.game.A_UP
+        
+        self.character.move(action)
+
 class GridGraph:
     def __init__(self, dimensions, solids):
         self.width, self.height = dimensions
