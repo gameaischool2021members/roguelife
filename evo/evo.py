@@ -41,7 +41,7 @@ class EvoAlg:
                     if self.spec[key]['dtype'] == int:
                         temp[key] = random.randint(self.spec[key]['min'], self.spec[key]['max'])
                     if self.spec[key]['dtype'] == bool:
-                        individual[key] = True
+                        temp[key] = True
             new_pop.append(temp)
         
         return new_pop
