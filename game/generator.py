@@ -21,7 +21,8 @@ class WorldGenerator:
         self.fitness_scores.append(fitness)
         
         if len(self.fitness_scores) >= len(self.level_params):
-            self.level_params = self.evo_system.get_new_generation(zip(self.level_params, self.fitness_scores))
+            self.level_params = self.evo_system.get_new_generation(list(zip(self.level_params, self.fitness_scores)))
+            self.fitness_scores = []
 
     def get_position_neighbours(self, world, matrix, i, j, depth):
 

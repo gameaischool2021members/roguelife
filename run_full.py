@@ -8,22 +8,22 @@ gen_param_specs = {
     'initial_rock_density' : {
         'dtype' : float,
         'min' : 0.0,
-        'max' : 1.0
+        'max' : 0.5
     },
     'initial_tree_density' : {
         'dtype' : float,
         'min' : 0.0,
-        'max' : 1.0
+        'max' : 0.5
     },
     'rock_refinement_runs' : {
         'dtype' : int,
-        'min' : 2,
-        'max' : 2
+        'min' : 0,
+        'max' : 5
     },
     'tree_refinement_runs' : {
         'dtype' : int,
-        'min' : 4,
-        'max' : 4
+        'min' : 0,
+        'max' : 5
     },
     'rock_neighbour_depth' : {
         'dtype' : int,
