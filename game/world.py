@@ -48,7 +48,7 @@ class World:
 
     
     def is_pos_free(self, pos):
-        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1 and self.map_base[pos[0]][pos[1]] != 1
+        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and not self.map_tree[pos[0]][pos[1]] and self.map_rock[pos[0]][pos[1]] != 1 and self.map_base[pos[0]][pos[1]] != 1
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -112,8 +112,10 @@ class Arrow:
 
         if self.x not in range(0, self.world.width) or \
            self.y not in range(0, self.world.height) or \
-           self.world.map_tree[self.x][self.y] == 1 or \
            self.world.map_rock[self.x][self.y] == 1:
+            self.active = False
+        elif self.world.map_tree[self.x][self.y]:
+            self.world.map_tree[self.x][self.y] -= 1
             self.active = False
         
         for enemy_controller in self.world.enemies:

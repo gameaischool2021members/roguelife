@@ -73,7 +73,7 @@ class WorldGenerator:
             for j in range(world.height):
 
                 if world.spawn_point != (i, j) and random.uniform(0, 1) < initial_tree_density and world.map_rock[i][j] != 1:
-                    world.map_tree[i][j] = 1
+                    world.map_tree[i][j] = 3
 
         for run in range(tree_refinement_runs):
             to_add = []
@@ -86,7 +86,7 @@ class WorldGenerator:
                     else:
                         to_remove.append([i,j])
             for cord in to_add:
-                world.map_tree[cord[0]][cord[1]] = 1
+                world.map_tree[cord[0]][cord[1]] = 3
             for cord in to_remove:
                 world.map_tree[cord[0]][cord[1]] = 0
 
@@ -187,7 +187,7 @@ class WorldGenerator:
         world.enemies = []
         for _ in range(5):
             pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
-            while world.map_tree[pos[0]][pos[1]] == 1 or world.map_rock[pos[0]][pos[1]]:
+            while world.map_tree[pos[0]][pos[1]] or world.map_rock[pos[0]][pos[1]]:
                 pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
             world.enemies.append(EnemyController(Character(pos, world), world))
 
