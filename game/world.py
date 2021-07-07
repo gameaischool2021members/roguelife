@@ -37,9 +37,9 @@ class World:
         self.arrows = list(filter(lambda x: x.active, self.arrows))
         
         n_enemies = len(self.enemies)
-        for enemy in self.enemies:
-            enemy.move(random.choice([self.game.A_UP, self.game.A_DOWN, self.game.A_LEFT, self.game.A_RIGHT]))
-        self.enemies = list(filter(lambda x: x.active, self.enemies))
+        for enemy_controller in self.enemies:
+            enemy_controller.step()
+        self.enemies = list(filter(lambda x: x.character.active, self.enemies))
         reward = n_enemies - len(self.enemies)
         done = False
         
@@ -116,7 +116,8 @@ class Arrow:
            self.world.map_rock[self.x][self.y] == 1:
             self.active = False
         
-        for enemy in self.world.enemies:
+        for enemy_controller in self.world.enemies:
+            enemy = enemy_controller.character
             if self.x == enemy.x and self.y == enemy.y:
                 enemy.active = False
                 self.active = False

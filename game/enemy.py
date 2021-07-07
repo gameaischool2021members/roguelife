@@ -5,10 +5,12 @@ class EnemyController:
     def __init__(self, character, world):
         self.world = world
         self.character = character
-        self.gg = GridGraph((self.world.width, self.world.height), self.world.map_tree)
+        solids = np.logical_or(self.world.map_tree, self.world.map_rock)
+        
+        self.gg = GridGraph((self.world.width, self.world.height), solids)
 
     def step(self):
-        path = self.gg.get_shortest_path((self.character.x, self.character.y), (self.world.player.x, self.world.player.y))
+        path = self.gg.get_shortest_path((self.character.x, self.character.y), (self.world.base_x, self.world.base_y))
         action = self.world.game.A_NOP
         
         if path:
