@@ -66,6 +66,9 @@ class Game(gym.Env):
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))
 
+        if reward > 0: 
+            print('reward={}!'.format(reward))
+
         return self.encode_state(pil_image), reward, done, {}
 
     def render(self, mode='human'):
@@ -96,7 +99,7 @@ class Game(gym.Env):
         self.clock.tick(int(self.framerate))
 
     def reset(self):
-        self.world = WorldGenerator(self).get_world()
+        self.world = self.worldgen.get_world()
         self.render()
 
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
