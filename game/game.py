@@ -24,8 +24,18 @@ class Game(gym.Env):
         self.gman = GraphicsManager(self.scale)
 
         self.clock = pg.time.Clock()
-        
-        self.world = WorldGenerator(self).get_world()
+
+
+        initial_rock_density = 0.3
+        initial_tree_density = 0.1
+        rock_refinement_runs = 2
+        tree_refinement_runs = 2
+        rock_neighbour_depth = 1
+        tree_neighbour_depth = 1
+        rock_neighbour_number = 3
+        tree_neighbour_number = 3
+
+        self.world = WorldGenerator(self).get_world(initial_rock_density, initial_tree_density, rock_refinement_runs, tree_refinement_runs, rock_neighbour_depth, tree_neighbour_depth, rock_neighbour_number, tree_neighbour_number)
 
     def step(self, action):
         for event in pg.event.get():
@@ -51,6 +61,8 @@ class Game(gym.Env):
                 pg.draw.rect(self.screen, (64, (128 + self.world.map_grass[i][j] * 128) % 256, 64), (i * self.scale, j * self.scale, self.scale, self.scale))
                 if self.world.map_tree[i][j] == 1:
                     self.screen.blit(self.gman.sprites['tree'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
+                if self.world.map_rock[i][j] == 1:
+                    self.screen.blit(self.gman.sprites['rock'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
         
         self.screen.blit(self.gman.sprites['person'], (self.world.player.x * self.scale, self.world.player.y * self.scale), (0, 0, self.scale, self.scale))
         for enemy in self.world.enemies:
