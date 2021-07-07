@@ -21,6 +21,7 @@ class World:
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
         self.map_rock = np.zeros((self.width, self.height))
+        self.map_base = np.zeros((self.width, self.height))
 
 
         
@@ -36,9 +37,9 @@ class World:
         self.arrows = list(filter(lambda x: x.active, self.arrows))
         
         n_enemies = len(self.enemies)
-        for enemy in self.enemies:
-            enemy.move(random.choice([self.game.A_UP, self.game.A_DOWN, self.game.A_LEFT, self.game.A_RIGHT]))
-        self.enemies = list(filter(lambda x: x.active, self.enemies))
+        for enemy_controller in self.enemies:
+            enemy_controller.step()
+        self.enemies = list(filter(lambda x: x.character.active, self.enemies))
         reward = n_enemies - len(self.enemies)
         done = False
         
@@ -47,7 +48,7 @@ class World:
 
     
     def is_pos_free(self, pos):
-        return self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1
+        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and self.map_tree[pos[0]][pos[1]] != 1 and self.map_rock[pos[0]][pos[1]] != 1 and self.map_base[pos[0]][pos[1]] != 1
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -65,25 +66,25 @@ class Character:
 
         if action == self.world.game.A_UP:
             if self.facing == self.DIR_N:
-                target_pos = (self.x, (self.y - 1) % self.world.height)
+                target_pos = (self.x, (self.y - 1))
             else:
                 self.facing = self.DIR_N
 
         if action == self.world.game.A_DOWN:
             if self.facing == self.DIR_S:
-                target_pos = (self.x, (self.y + 1) % self.world.height)
+                target_pos = (self.x, (self.y + 1))
             else:
                 self.facing = self.DIR_S
         
         if action == self.world.game.A_LEFT:
             if self.facing == self.DIR_W:
-                target_pos = ((self.x - 1) % self.world.width, self.y)
+                target_pos = ((self.x - 1), self.y)
             else:
                 self.facing = self.DIR_W
 
         if action == self.world.game.A_RIGHT:
             if self.facing == self.DIR_E:
-                target_pos = ((self.x + 1) % self.world.width, self.y)
+                target_pos = ((self.x + 1), self.y)
             else:
                 self.facing = self.DIR_E
             
@@ -115,7 +116,8 @@ class Arrow:
            self.world.map_rock[self.x][self.y] == 1:
             self.active = False
         
-        for enemy in self.world.enemies:
+        for enemy_controller in self.world.enemies:
+            enemy = enemy_controller.character
             if self.x == enemy.x and self.y == enemy.y:
                 enemy.active = False
                 self.active = False
