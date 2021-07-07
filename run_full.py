@@ -1,6 +1,7 @@
 
 from game.game import Game
 from evo.evo import EvoAlg
+from agents.rulebased import RuleBasedAgent
 import random 
 import time
 
@@ -57,8 +58,12 @@ gen_param_specs = {
 
 ea = EvoAlg(gen_param_specs)
 env = Game(evo_system=ea)
+state = env.reset()
+agent = RuleBasedAgent(env)
 
 while True:
-    _, _, done, _ = env.step(env.action_space.sample())
+    state, _, done, _ = env.step(agent.act(state))
+    
     if done:
         env.reset()
+        agent = RuleBasedAgent(env)

@@ -13,11 +13,12 @@ class Game(gym.Env):
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
     def __init__(self, evo_system=None):
-        self.framerate = 10
+        self.framerate = 0
         self.width, self.height = (15, 15)
         self.scale = 32
         self.fitness = 0
-
+        self.max_steps = 1000
+        self.step_count = 0
         self.action_space = gym.spaces.Discrete(6)
 
         pg.init()
@@ -31,6 +32,7 @@ class Game(gym.Env):
 
     def reset(self):
         self.world = self.worldgen.get_world()
+        self.step_count = 0
     
     def step(self, action):
         for event in pg.event.get():
@@ -40,10 +42,17 @@ class Game(gym.Env):
         pg.event.pump()
         
         reward, done = self.world.step(action)
-        
+
+        if self.step_count == self.max_steps:
+            done = True
+        self.step_count += 1
+
         if done:
             if not self.world.map_base[self.world.base_x][self.world.base_y]:
                 self.fitness += 1
+                print('Skeletons wins!')
+            else:
+                print('Player wins!')
             self.worldgen.register_fitness(self.fitness)
 
         self.render()
