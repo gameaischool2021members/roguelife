@@ -18,6 +18,7 @@ class World:
         self.player = Character(self.spawn_point, self)
         self.arrows = []
 
+
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
         self.map_rock = np.zeros((self.width, self.height))
@@ -41,13 +42,22 @@ class World:
             enemy_controller.step()
         self.enemies = list(filter(lambda x: x.character.active, self.enemies))
         reward = n_enemies - len(self.enemies)
-        done = False
+
+        if not self.map_base[self.base_x][self.base_y] or not len(self.enemies):
+            done = True
+        else:
+            done = False
         
         return reward, done
 
 
     
     def is_pos_free(self, pos):
+        for skel in self.enemies:
+            if pos[0] == skel.character.x and pos[1] == skel.character.y:
+                return False
+        if pos[0] == self.player.x and pos[1] == self.player.y:
+                return False
         return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and not self.map_tree[pos[0]][pos[1]] and self.map_rock[pos[0]][pos[1]] != 1 and not self.map_base[pos[0]][pos[1]]
 
 class Character:
