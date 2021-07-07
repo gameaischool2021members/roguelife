@@ -21,14 +21,8 @@ class World:
 
         self.map_grass = np.zeros((self.width, self.height))
         self.map_tree = np.zeros((self.width, self.height))
-        self.generate_world()
-
-        self.enemies = []
-        for _ in range(5):
-            pos = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
-            while self.map_tree[pos[0]][pos[1]] == 1:
-                pos = (random.randint(0, self.width - 1), random.randint(0, self.height - 1))
-            self.enemies.append(Character(pos, self))
+        self.map_rock = np.zeros((self.width, self.height))
+        self.map_base = np.zeros((self.width, self.height))
 
     def step(self, action):
         if action == self.game.A_ATK:
@@ -41,42 +35,27 @@ class World:
         self.arrows = list(filter(lambda x: x.active, self.arrows))
 
         n_enemies = len(self.enemies)
-        for enemy in self.enemies:
-            enemy.move(random.choice([self.game.A_UP, self.game.A_DOWN, self.game.A_LEFT, self.game.A_RIGHT]))
-        self.enemies = list(filter(lambda x: x.active, self.enemies))
+        for enemy_controller in self.enemies:
+            enemy_controller.step()
+        self.enemies = list(filter(lambda x: x.character.active, self.enemies))
         reward = n_enemies - len(self.enemies)
-        if len(self.enemies) == 0:
+
+        if not self.map_base[self.base_x][self.base_y] or not len(self.enemies):
             done = True
         else:
             done = False
-
+        
         return reward, done
 
-    def generate_world(self):
-        # Simple perlin noise
 
-        scale = 10
-        octaves = 6
-        persistence = 0.5
-        lacunarity = 2.0
-
-        for i in range(self.width):
-            for j in range(self.height):
-                self.map_grass[i][j] = noise.pnoise2(
-                    i / scale,
-                    j / scale,
-                    octaves=octaves,
-                    persistence=persistence,
-                    lacunarity=lacunarity,
-                    repeatx=self.width,
-                    repeaty=self.height,
-                    base=0
-                )
-                if self.spawn_point != (i, j) and random.uniform(0, 1) < .1:
-                    self.map_tree[i][j] = 1
-
+    
     def is_pos_free(self, pos):
-        return self.map_tree[pos[0]][pos[1]] != 1
+        for skel in self.enemies:
+            if pos[0] == skel.character.x and pos[1] == skel.character.y:
+                return False
+        if pos[0] == self.player.x and pos[1] == self.player.y:
+                return False
+        return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and not self.map_tree[pos[0]][pos[1]] and self.map_rock[pos[0]][pos[1]] != 1 and not self.map_base[pos[0]][pos[1]]
 
 
 class Character:
@@ -95,30 +74,33 @@ class Character:
 
         if action == self.world.game.A_UP:
             if self.facing == self.DIR_N:
-                target_pos = (self.x, (self.y - 1) % self.world.height)
+                target_pos = (self.x, (self.y - 1))
             else:
                 self.facing = self.DIR_N
 
         if action == self.world.game.A_DOWN:
             if self.facing == self.DIR_S:
-                target_pos = (self.x, (self.y + 1) % self.world.height)
+                target_pos = (self.x, (self.y + 1))
             else:
                 self.facing = self.DIR_S
 
         if action == self.world.game.A_LEFT:
             if self.facing == self.DIR_W:
-                target_pos = ((self.x - 1) % self.world.width, self.y)
+                target_pos = ((self.x - 1), self.y)
             else:
                 self.facing = self.DIR_W
 
         if action == self.world.game.A_RIGHT:
             if self.facing == self.DIR_E:
-                target_pos = ((self.x + 1) % self.world.width, self.y)
+                target_pos = ((self.x + 1), self.y)
             else:
                 self.facing = self.DIR_E
 
         if self.world.is_pos_free(target_pos):
             self.x, self.y = target_pos
+            return None
+        else:
+            return target_pos
 
 
 class Arrow:
@@ -141,11 +123,15 @@ class Arrow:
             self.x += 1
 
         if self.x not in range(0, self.world.width) or \
-                self.y not in range(0, self.world.height) or \
-                self.world.map_tree[self.x][self.y] == 1:
+           self.y not in range(0, self.world.height) or \
+           self.world.map_rock[self.x][self.y] == 1:
             self.active = False
-
-        for enemy in self.world.enemies:
+        elif self.world.map_tree[self.x][self.y]:
+            self.world.map_tree[self.x][self.y] -= 1
+            self.active = False
+        
+        for enemy_controller in self.world.enemies:
+            enemy = enemy_controller.character
             if self.x == enemy.x and self.y == enemy.y:
                 enemy.active = False
                 self.active = False
