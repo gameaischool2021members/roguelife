@@ -7,7 +7,6 @@ import numpy as np
 import random
 import noise
 
-
 class World:
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 

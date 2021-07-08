@@ -11,43 +11,43 @@ from stable_baselines3.common.vec_env import DummyVecEnv
 gen_param_specs = {
     'initial_rock_density' : {
         'dtype' : float,
-        'min' : 0.0,
-        'max' : 0.5
+        'min' : 0.2,
+        'max' : 0.4
     },
     'initial_tree_density' : {
         'dtype' : float,
-        'min' : 0.0,
-        'max' : 0.5
+        'min' : 0.2,
+        'max' : 0.4
     },
     'rock_refinement_runs' : {
         'dtype' : int,
-        'min' : 0,
-        'max' : 5
+        'min' : 1,
+        'max' : 3
     },
     'tree_refinement_runs' : {
         'dtype' : int,
-        'min' : 0,
-        'max' : 5
+        'min' : 1,
+        'max' : 3
     },
     'rock_neighbour_depth' : {
         'dtype' : int,
         'min' : 1,
-        'max' : 1
+        'max' : 2
     },
     'tree_neighbour_depth' : {
         'dtype' : int,
         'min' : 1,
-        'max' : 1
+        'max' : 2
     },
     'rock_neighbour_number' : {
         'dtype' : int,
-        'min' : 3,
-        'max' : 3
+        'min' : 4,
+        'max' : 8
     },
     'tree_neighbour_number' : {
         'dtype' : int,
-        'min' : 3,
-        'max' : 3
+        'min' : 4,
+        'max' : 8
     },
     'base_clear_depth' : {
         'dtype' : int,
@@ -60,7 +60,8 @@ gen_param_specs = {
 }
 
 ea = EvoAlg(gen_param_specs)
-env = DummyVecEnv([lambda : Game(evo_system=ea)])
+env_raw = Game(evo_system=ea)
+env = DummyVecEnv([lambda : env_raw])
 
 if len(sys.argv) == 3 and sys.argv[1] == '--train':
     if path.exists('saved_models/{}.zip'.format(sys.argv[2])):
@@ -68,12 +69,14 @@ if len(sys.argv) == 3 and sys.argv[1] == '--train':
         print('Loading existing model')
     else:
         print('Creating new model')
-        model = DQN('CnnPolicy', env, verbose=1, buffer_size=10000, learning_starts=2000, exploration_fraction=0.3)
+        model = DQN('CnnPolicy', env, verbose=1, buffer_size=1000, learning_starts=1000, exploration_fraction=0.3)
     try:
         model.learn(total_timesteps=100000, log_interval=4)
         model.save('saved_models/{}'.format(sys.argv[2]))
+        env_raw.worldgen.save_log(sys.argv[2])
     except:
-        model.save('saved_models/{}_x'.format(sys.argv[2]))
+        model.save('saved_models/{}'.format(sys.argv[2]))
+        env_raw.worldgen.save_log(sys.argv[2])
 
 if len(sys.argv) == 3 and sys.argv[1] == '--run':
     model = DQN.load('saved_models/{}'.format(sys.argv[2]), env=env)
