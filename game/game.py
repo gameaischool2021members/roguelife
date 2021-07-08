@@ -4,7 +4,6 @@ import pygame as pg
 import numpy as np
 import random
 import gym
-import noise
 from .gman import GraphicsManager
 from PIL import Image, ImageOps
 from .generator import WorldGenerator
@@ -77,7 +76,8 @@ class Game(gym.Env):
 
         for i in range(self.width):
             for j in range(self.height):
-                pg.draw.rect(self.screen, (64, (128 + self.world.map_grass[i][j] * 128) % 256, 64), (i * self.scale, j * self.scale, self.scale, self.scale))
+                grassColor = pg.Color((61, 117, 96)).lerp((44, 97, 60), self.world.map_grass[i][j])
+                pg.draw.rect(self.screen, grassColor, (i * self.scale, j * self.scale, self.scale, self.scale))
                 if self.world.map_tree[i][j]:
                     self.screen.blit(self.gman.sprites['tree'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
                 if self.world.map_rock[i][j]:

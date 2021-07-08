@@ -6,7 +6,6 @@ The game that both plays and develops itself
 pygame
 numpy
 gym
-noise
 pillow
 scipy
 stable_baselines3
