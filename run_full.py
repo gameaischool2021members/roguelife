@@ -57,14 +57,16 @@ gen_param_specs = {
     }
 }
 
+random.seed(43)
+
 ea = EvoAlg(gen_param_specs)
 env = Game(evo_system=ea)
 state = env.reset()
-agent = RuleBasedAgent3(env)
+agent = RuleBasedAgent2(env)
 
 while True:
     state, _, done, _ = env.step(agent.act(state))
     
     if done:
         env.reset()
-        agent = RuleBasedAgent3(env)
+        agent = RuleBasedAgent2(env)

@@ -36,9 +36,7 @@ class Game(gym.Env):
         self.worldgen = WorldGenerator(self, evo_system) 
         self.world = self.worldgen.get_world()
 
-    def reset(self):
-        self.world = self.worldgen.get_world()
-        self.step_count = 0
+
     
     def step(self, action):
         for event in pg.event.get():
@@ -49,9 +47,10 @@ class Game(gym.Env):
 
         reward, done = self.world.step(action)
 
-        if self.step_count == self.max_steps:
+        if self.step_count >= self.max_steps:
             done = True
         self.step_count += 1
+
 
         if done:
             if not self.world.map_base[self.world.base_x][self.world.base_y]:
@@ -105,6 +104,8 @@ class Game(gym.Env):
     def reset(self):
         self.world = self.worldgen.get_world()
         self.render()
+
+        self.step_count = 0
 
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))

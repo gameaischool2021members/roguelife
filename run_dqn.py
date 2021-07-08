@@ -59,6 +59,8 @@ gen_param_specs = {
     }
 }
 
+random.seed(42)
+
 ea = EvoAlg(gen_param_specs)
 env_raw = Game(evo_system=ea)
 env = DummyVecEnv([lambda : env_raw])

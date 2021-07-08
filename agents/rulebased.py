@@ -159,7 +159,7 @@ class RuleBasedAgent2: #The Hunter Gravedigger
         
         target = threat_levels[0][0]
         path = self.gg.get_shortest_path((self.env.world.player.x, self.env.world.player.y), (target.character.x, target.character.y))
-        
+    
 
         action = self.env.world.game.A_NOP
 
