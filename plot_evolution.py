@@ -1,7 +1,8 @@
 import json
 import matplotlib.pyplot as plt
+import sys
 
-data_id = 'R03'
+data_id = sys.argv[1]
 
 with open('{}_log.txt'.format(data_id)) as f:
     data = json.load(f)
