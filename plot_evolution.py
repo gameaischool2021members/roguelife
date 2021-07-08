@@ -1,7 +1,7 @@
 import json
 import matplotlib.pyplot as plt
 
-with open('log.txt') as f:
+with open('hello_world_log.txt') as f:
     data = json.load(f)
 
 phistories = {}

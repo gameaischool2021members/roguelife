@@ -27,11 +27,11 @@ class WorldGenerator:
             self.level_params = self.evo_system.get_new_generation(list(zip(self.level_params, self.fitness_scores)))
             self.fitness_scores = []
 
-    def save_log(self):
+    def save_log(self, fname):
         spec_cpy = self.evo_system.spec.copy()
         for key in spec_cpy:
             del spec_cpy[key]['dtype']
-        with open('log.txt', 'w') as file:
+        with open('{}_log.txt'.format(fname), 'w') as file:
             file.write(json.dumps({'spec' : spec_cpy, 'population_history' : self.log}))
 
     def get_position_neighbours(self, world, matrix, i, j, depth):

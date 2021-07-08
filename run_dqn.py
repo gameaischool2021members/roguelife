@@ -73,10 +73,10 @@ if len(sys.argv) == 3 and sys.argv[1] == '--train':
     try:
         model.learn(total_timesteps=100000, log_interval=4)
         model.save('saved_models/{}'.format(sys.argv[2]))
-        env_raw.worldgen.save_log()
+        env_raw.worldgen.save_log(sys.argv[2])
     except:
-        model.save('saved_models/{}_x'.format(sys.argv[2]))
-        env_raw.worldgen.save_log()
+        model.save('saved_models/{}'.format(sys.argv[2]))
+        env_raw.worldgen.save_log(sys.argv[2])
 
 if len(sys.argv) == 3 and sys.argv[1] == '--run':
     model = DQN.load('saved_models/{}'.format(sys.argv[2]), env=env)
