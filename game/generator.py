@@ -8,6 +8,7 @@ from scipy.ndimage.measurements import label
 import random
 import noise
 import numpy as np
+import json
 
 class WorldGenerator:
     def __init__(self, game, evo_system):
@@ -16,13 +17,22 @@ class WorldGenerator:
         self.level_params = evo_system.get_initial_population()
         self.params = self.level_params[0].copy()
         self.fitness_scores = []
+        self.log = []
     
     def register_fitness(self, fitness):
         self.fitness_scores.append(fitness)
         
         if len(self.fitness_scores) >= len(self.level_params):
+            self.log.append({'population' : self.level_params.copy(), 'fitness' : self.fitness_scores.copy()})
             self.level_params = self.evo_system.get_new_generation(list(zip(self.level_params, self.fitness_scores)))
             self.fitness_scores = []
+
+    def save_log(self):
+        spec_cpy = self.evo_system.spec.copy()
+        for key in spec_cpy:
+            del spec_cpy[key]['dtype']
+        with open('log.txt', 'w') as file:
+            file.write(json.dumps({'spec' : spec_cpy, 'population_history' : self.log}))
 
     def get_position_neighbours(self, world, matrix, i, j, depth):
 
