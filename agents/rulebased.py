@@ -80,8 +80,11 @@ class RuleBasedAgent1: #The Defender
         threat_levels.sort(key=lambda x: x[1])
         
 
+        target = threat_levels[0][0]
+        path = self.gg.get_shortest_path((self.env.world.player.x, self.env.world.player.y), (target.x, target.y))
 
-        if threat_levels[0][1] > 6:
+
+        if threat_levels[0][1] > 6 or len(path) > 8:
 
             path = self.gg.get_shortest_path((self.env.world.player.x, self.env.world.player.y), (self.env.world.base_x + random.choice([-1, 1]) , self.env.world.base_y + random.choice([-1, 1])))
 

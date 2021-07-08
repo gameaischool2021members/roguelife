@@ -135,7 +135,7 @@ class Arrow:
         
         for enemy_controller in self.world.enemies:
             enemy = enemy_controller.character
-            if self.x == enemy.x and self.y == enemy.y:
+            if self.x == enemy.x and self.y == enemy.y and not enemy_controller.buried_steps:
                 enemy.active = False
                 self.active = False
 
