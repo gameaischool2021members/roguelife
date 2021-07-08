@@ -1,4 +1,7 @@
 # Generator: Takes in a set of parameters, and returns a world object
+import sys
+
+import scipy.ndimage
 
 from .world import World, Character
 from .enemy import EnemyController, GridGraph
@@ -6,7 +9,6 @@ from .enemy import EnemyController, GridGraph
 from scipy.ndimage.measurements import label
 
 import random
-import noise
 import numpy as np
 
 class WorldGenerator:
@@ -162,26 +164,12 @@ class WorldGenerator:
 
         world = World(self.game)
 
-        scale = 10
-        octaves = 6
-        persistence = 0.5
-        lacunarity = 2.0
-
-        for i in range(world.width):
-            for j in range(world.height):
-
-                world.map_grass[i][j] = noise.pnoise2(
-                    i / scale, 
-                    j / scale, 
-                    octaves=octaves, 
-                    persistence=persistence, 
-                    lacunarity=lacunarity, 
-                    repeatx=world.width, 
-                    repeaty=world.height, 
-                    base=0
-                )
-
         self.generate_world_base_and_player(world)
+
+        grassTiles = np.array(np.invert(np.logical_or(world.map_tree, world.map_rock)), dtype=float)
+
+        grassTiles = scipy.ndimage.gaussian_filter(grassTiles, sigma=1.0)
+        world.map_grass = grassTiles
         
         world.enemies = []
         for _ in range(5):
