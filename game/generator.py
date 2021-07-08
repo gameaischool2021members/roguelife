@@ -147,7 +147,7 @@ class WorldGenerator:
 
         for n_i in range(chosen_one[1] - self.params['base_clear_depth'], chosen_one[1] + self.params['base_clear_depth'] + 1):
             for n_j in range(chosen_one[0] - self.params['base_clear_depth'], chosen_one[0] + self.params['base_clear_depth'] + 1):
-                if n_i != chosen_one[1] and n_j != chosen_one[0]:
+                if n_i != chosen_one[1] or n_j != chosen_one[0]:
                     player_possibilities.append([n_i, n_j])
 
         chosen_one = random.choice(player_possibilities)

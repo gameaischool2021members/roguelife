@@ -1,19 +1,20 @@
 
 from game.game import Game
 from evo.evo import EvoAlg
-from agents.rulebased import RuleBasedAgent0, RuleBasedAgent1, RuleBasedAgent2
+from agents.rulebased import RuleBasedAgent0, RuleBasedAgent1, RuleBasedAgent2, RuleBasedAgent3
+import random 
 import random 
 import time
 
 gen_param_specs = {
     'initial_rock_density' : {
         'dtype' : float,
-        'min' : 0.2,
+        'min' : 0.1,
         'max' : 0.4
     },
     'initial_tree_density' : {
         'dtype' : float,
-        'min' : 0.2,
+        'min' : 0.1,
         'max' : 0.4
     },
     'rock_refinement_runs' : {
@@ -59,11 +60,11 @@ gen_param_specs = {
 ea = EvoAlg(gen_param_specs)
 env = Game(evo_system=ea)
 state = env.reset()
-agent = RuleBasedAgent0(env)
+agent = RuleBasedAgent3(env)
 
 while True:
     state, _, done, _ = env.step(agent.act(state))
     
     if done:
         env.reset()
-        agent = RuleBasedAgent0(env)
+        agent = RuleBasedAgent3(env)
