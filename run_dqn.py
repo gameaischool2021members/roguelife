@@ -62,9 +62,12 @@ ea = EvoAlg(gen_param_specs)
 env = DummyVecEnv([lambda : Game(evo_system=ea)])
 
 if len(sys.argv) == 3 and sys.argv[1] == '--train':
-    model = DQN('CnnPolicy', env, verbose=1, buffer_size=10000, learning_starts=5000, exploration_fraction=0.3)
-    model.learn(total_timesteps=1000, log_interval=4)
-    model.save('saved_models/{}'.format(sys.argv[2]))
+    model = DQN('CnnPolicy', env, verbose=1, buffer_size=10000, learning_starts=2000, exploration_fraction=0.3)
+    try:
+        model.learn(total_timesteps=100000, log_interval=4)
+        model.save('saved_models/{}'.format(sys.argv[2]))
+    except:
+        model.save('saved_models/{}_exception'.format(sys.argv[2]))
 
 if len(sys.argv) == 3 and sys.argv[1] == '--run':
     model = DQN.load('saved_models/{}'.format(sys.argv[2]), env=env)
