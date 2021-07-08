@@ -1,7 +1,9 @@
 import json
 import matplotlib.pyplot as plt
 
-with open('hello_world_log.txt') as f:
+data_id = 'R03'
+
+with open('{}_log.txt'.format(data_id)) as f:
     data = json.load(f)
 
 phistories = {}
@@ -17,7 +19,9 @@ for pop in data['population_history']:
             vrange = data['spec'][key]['max'] - data['spec'][key]['min']
             phistories[key].append(((sum(arr) / len(arr)) - data['spec'][key]['min']) / (vrange if vrange != 0 else data['spec'][key]['min']))
 
+fig = plt.figure(1)
 for key in phistories:
-    plt.plot(phistories[key])
+    plt.plot(phistories[key], label=key)
+plt.legend(loc='center left', bbox_to_anchor=(1, .5))
 
-plt.show()
+fig.savefig('{}_plot'.format(data_id), bbox_inches='tight')
