@@ -75,7 +75,7 @@ class Game(gym.Env):
 
         for i in range(self.width):
             for j in range(self.height):
-                grassColor = pg.Color((61, 117, 96)).lerp((44, 97, 60), self.world.map_grass[i][j])
+                grassColor = pg.Color((31, 87, 66)).lerp((24, 57, 40), self.world.map_grass[i][j])
                 pg.draw.rect(self.screen, grassColor, (i * self.scale, j * self.scale, self.scale, self.scale))
                 if self.world.map_tree[i][j]:
                     self.screen.blit(self.gman.sprites['tree'], (i * self.scale, j * self.scale), (0, 0, self.scale, self.scale))
