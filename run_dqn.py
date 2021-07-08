@@ -1,5 +1,6 @@
 from game.game import Game
 from evo.evo import EvoAlg
+from os import path
 import random 
 import time
 import sys
@@ -62,12 +63,17 @@ ea = EvoAlg(gen_param_specs)
 env = DummyVecEnv([lambda : Game(evo_system=ea)])
 
 if len(sys.argv) == 3 and sys.argv[1] == '--train':
-    model = DQN('CnnPolicy', env, verbose=1, buffer_size=10000, learning_starts=2000, exploration_fraction=0.3)
+    if path.exists('saved_models/{}.zip'.format(sys.argv[2])):
+        model = DQN.load('saved_models/{}'.format(sys.argv[2]), env=env)
+        print('Loading existing model')
+    else:
+        print('Creating new model')
+        model = DQN('CnnPolicy', env, verbose=1, buffer_size=10000, learning_starts=2000, exploration_fraction=0.3)
     try:
         model.learn(total_timesteps=100000, log_interval=4)
         model.save('saved_models/{}'.format(sys.argv[2]))
     except:
-        model.save('saved_models/{}_exception'.format(sys.argv[2]))
+        model.save('saved_models/{}_x'.format(sys.argv[2]))
 
 if len(sys.argv) == 3 and sys.argv[1] == '--run':
     model = DQN.load('saved_models/{}'.format(sys.argv[2]), env=env)
