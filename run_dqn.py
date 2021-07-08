@@ -1,9 +1,8 @@
-
 from game.game import Game
 from evo.evo import EvoAlg
-from agents.rulebased import RuleBasedAgent
 import random 
 import time
+import sys
 
 from stable_baselines3 import DQN
 from stable_baselines3.common.vec_env import DummyVecEnv
@@ -60,37 +59,20 @@ gen_param_specs = {
 }
 
 ea = EvoAlg(gen_param_specs)
-env = Game(evo_system=ea)
-state = env.reset()
+env = DummyVecEnv([lambda : Game(evo_system=ea)])
 
-env = DummyVecEnv([lambda : env])
+if len(sys.argv) == 3 and sys.argv[1] == '--train':
+    model = DQN('CnnPolicy', env, verbose=1, buffer_size=10000, learning_starts=5000, exploration_fraction=0.3)
+    model.learn(total_timesteps=1000, log_interval=4)
+    model.save('saved_models/{}'.format(sys.argv[2]))
 
-model = DQN("CnnPolicy", env, verbose=1, buffer_size=10000, learning_starts=5000, exploration_fraction=0.3)
-model.learn(total_timesteps=100000, log_interval=4)
+if len(sys.argv) == 3 and sys.argv[1] == '--run':
+    model = DQN.load('saved_models/{}'.format(sys.argv[2]), env=env)
+    obs = env.reset()
 
-agent = RuleBasedAgent(env)
+    while True:
+        action, _ = model.predict(obs, deterministic=False)
+        obs, reward, done, info = env.step(action)
 
-
-while True:
-    state, _, done, _ = env.step(agent.act(state))
-    
-    if done:
-        env.reset()
-        agent = RuleBasedAgent(env)
-
-"""
-env = DummyVecEnv([lambda: Game()])
-
-model = DQN("CnnPolicy", env, verbose=1, buffer_size=10000, learning_starts=5000, exploration_fraction=0.3)
-model.learn(total_timesteps=100000, log_interval=4)
-
-obs = env.reset()
-while True:
-    action, _states = model.predict(obs, deterministic=False)
-    obs, reward, done, info = env.step(action)
-    env.render()
-    time.sleep(0.01)
-    if done:
-        print("Reset")
-        obs = env.reset()
-"""
+        if done:
+            obs = env.reset()
