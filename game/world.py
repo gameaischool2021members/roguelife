@@ -36,7 +36,10 @@ class World:
 
         n_enemies = len(self.enemies)
         for enemy_controller in self.enemies:
-            enemy_controller.step()
+            if enemy_controller.buried_steps and enemy_controller.character.x == self.player.x and enemy_controller.character.y == self.player.y:
+                enemy_controller.character.active = False
+            else:
+                enemy_controller.step()
         self.enemies = list(filter(lambda x: x.character.active, self.enemies))
         reward = n_enemies - len(self.enemies)
 
@@ -51,7 +54,7 @@ class World:
     
     def is_pos_free(self, pos):
         for skel in self.enemies:
-            if pos[0] == skel.character.x and pos[1] == skel.character.y:
+            if pos[0] == skel.character.x and pos[1] == skel.character.y and not skel.buried_steps:
                 return False
         if pos[0] == self.player.x and pos[1] == self.player.y:
                 return False

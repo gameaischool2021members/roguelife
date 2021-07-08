@@ -5,6 +5,8 @@ class EnemyController:
     def __init__(self, character, world, enemies_crush_trees):
         self.world = world
         self.character = character
+
+        self.buried_steps = 20
         if enemies_crush_trees:
             solids = self.world.map_rock
         else:
@@ -13,28 +15,34 @@ class EnemyController:
         self.gg = GridGraph((self.world.width, self.world.height), solids)
 
     def step(self):
-        path = self.gg.get_shortest_path((self.character.x, self.character.y), (self.world.base_x, self.world.base_y))
-        action = self.world.game.A_NOP
-        
-        if path:
-            src, dst = ((self.character.x, self.character.y), path[-1])
-        
-            if dst[0] - src[0] == 1:
-                action = self.world.game.A_RIGHT
-            if dst[0] - src[0] == -1:
-                action = self.world.game.A_LEFT
-            if dst[1] - src[1] == 1:
-                action = self.world.game.A_DOWN
-            if dst[1] - src[1] == -1:
-                action = self.world.game.A_UP
-        
-        obstacle_found = self.character.move(action)
 
-        if obstacle_found:
-            if self.world.map_tree[obstacle_found[0]][obstacle_found[1]]:
-                 self.world.map_tree[obstacle_found[0]][obstacle_found[1]] -= 1
-            if self.world.map_base[obstacle_found[0]][obstacle_found[1]]:
-                 self.world.map_base[obstacle_found[0]][obstacle_found[1]] -= 1
+        if self.buried_steps:
+            self.buried_steps -= 1
+        else:
+            path = self.gg.get_shortest_path((self.character.x, self.character.y), (self.world.base_x, self.world.base_y))
+            action = self.world.game.A_NOP
+            
+            if path:
+                src, dst = ((self.character.x, self.character.y), path[-1])
+            
+                if dst[0] - src[0] == 1:
+                    action = self.world.game.A_RIGHT
+                if dst[0] - src[0] == -1:
+                    action = self.world.game.A_LEFT
+                if dst[1] - src[1] == 1:
+                    action = self.world.game.A_DOWN
+                if dst[1] - src[1] == -1:
+                    action = self.world.game.A_UP
+            
+            obstacle_found = self.character.move(action)
+
+            if obstacle_found:
+                if self.world.map_tree[obstacle_found[0]][obstacle_found[1]]:
+                     self.world.map_tree[obstacle_found[0]][obstacle_found[1]] -= 1
+                if self.world.map_base[obstacle_found[0]][obstacle_found[1]]:
+                     self.world.map_base[obstacle_found[0]][obstacle_found[1]] -= 1
+
+
 
 
 class GridGraph:
