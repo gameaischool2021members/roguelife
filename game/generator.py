@@ -64,7 +64,6 @@ class WorldGenerator:
 
         for i in range(world.width):
             for j in range(world.height):
-
                 if random.uniform(0, 1) < self.params['initial_rock_density']:
                     world.map_rock[i][j] = 1
 
@@ -176,7 +175,9 @@ class WorldGenerator:
 
         self.generate_world_base_and_player(world)
 
-        grassTiles = np.array(np.invert(np.logical_or(world.map_tree, world.map_rock)), dtype=float)
+
+
+        grassTiles = np.array(np.invert( np.logical_or(np.logical_or(world.map_tree, world.map_rock ), np.random.randint(2, size=(world.height, world.width)) )) , dtype=float)
 
         grassTiles = scipy.ndimage.gaussian_filter(grassTiles, sigma=1.0)
         world.map_grass = grassTiles

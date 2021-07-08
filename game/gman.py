@@ -18,7 +18,9 @@ class GraphicsManager:
             'arrow' : self.get_tile(tile_sheet, 4, 2),
             'rock' : self.get_tile(tile_sheet, 4, 5),
             'base': self.get_tile(tile_sheet, 4, 8),
-            'grave': self.get_tile(tile_sheet, 4, 7)
+            'grave': self.get_tile(tile_sheet, 4, 7),
+            'grass': self.get_tile(tile_sheet, 1, 0)
+
         }
 
     def get_tile(self, sheet, x, y):

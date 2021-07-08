@@ -36,6 +36,10 @@ class Game(gym.Env):
         self.world = self.worldgen.get_world()
 
 
+        
+
+
+
     
     def step(self, action):
         for event in pg.event.get():

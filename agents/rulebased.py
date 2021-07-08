@@ -88,7 +88,7 @@ class RuleBasedAgent1: #The Defender
 
             path = self.gg.get_shortest_path((self.env.world.player.x, self.env.world.player.y), (self.env.world.base_x + random.choice([-1, 1]) , self.env.world.base_y + random.choice([-1, 1])))
 
-            action = self.env.world.game.A_NOP
+            action = random.choice(range(6))
 
             if path:
         
@@ -161,7 +161,8 @@ class RuleBasedAgent2: #The Hunter Gravedigger
         path = self.gg.get_shortest_path((self.env.world.player.x, self.env.world.player.y), (target.character.x, target.character.y))
     
 
-        action = self.env.world.game.A_NOP
+        action = random.choice(range(6))
+
 
         if path:
             if not target.buried_steps:
@@ -186,6 +187,8 @@ class RuleBasedAgent2: #The Hunter Gravedigger
                 action = self.env.world.game.A_DOWN
             if dst[1] - src[1] == -1:
                 action = self.env.world.game.A_UP
+
+
         return action
 
 
