@@ -17,7 +17,8 @@ class GraphicsManager:
             'skeleton' : self.get_tile(creature_sheet, 0, 6),
             'arrow' : self.get_tile(tile_sheet, 4, 2),
             'rock' : self.get_tile(tile_sheet, 4, 5),
-            'base': self.get_tile(tile_sheet, 4, 8)
+            'base': self.get_tile(tile_sheet, 4, 8),
+            'grave': self.get_tile(tile_sheet, 4, 7)
         }
 
     def get_tile(self, sheet, x, y):

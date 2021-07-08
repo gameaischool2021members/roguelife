@@ -10,6 +10,7 @@ from scipy.ndimage.measurements import label
 
 import random
 import numpy as np
+import json
 
 class WorldGenerator:
     def __init__(self, game, evo_system):
@@ -18,13 +19,22 @@ class WorldGenerator:
         self.level_params = evo_system.get_initial_population()
         self.params = self.level_params[0].copy()
         self.fitness_scores = []
+        self.log = []
     
     def register_fitness(self, fitness):
         self.fitness_scores.append(fitness)
         
         if len(self.fitness_scores) >= len(self.level_params):
+            self.log.append({'population' : self.level_params.copy(), 'fitness' : self.fitness_scores.copy()})
             self.level_params = self.evo_system.get_new_generation(list(zip(self.level_params, self.fitness_scores)))
             self.fitness_scores = []
+
+    def save_log(self, fname):
+        spec_cpy = self.evo_system.spec.copy()
+        for key in spec_cpy:
+            del spec_cpy[key]['dtype']
+        with open('{}_log.txt'.format(fname), 'w') as file:
+            file.write(json.dumps({'spec' : spec_cpy, 'population_history' : self.log}))
 
     def get_position_neighbours(self, world, matrix, i, j, depth):
 
@@ -39,15 +49,11 @@ class WorldGenerator:
             for n_j in range(j - depth, j + depth + 1):
 
 
-                if n_i < 0 or n_i >= world.height:
-                    bordering_edges = True
-                    continue
-                if n_j < 0 or n_j >= world.height:
+                if n_i < 0 or n_i >= world.height or n_j < 0 or n_j >= world.height:
                     bordering_edges = True
                     continue
                 if n_i == i and n_j == j:
                     continue
-
                 if matrix[n_i][n_j]:
                     neighbours.append([n_i, n_j])
 
@@ -59,7 +65,7 @@ class WorldGenerator:
         for i in range(world.width):
             for j in range(world.height):
 
-                if world.spawn_point != (i, j) and random.uniform(0, 1) < self.params['initial_rock_density']:
+                if random.uniform(0, 1) < self.params['initial_rock_density']:
                     world.map_rock[i][j] = 1
 
         for run in range(self.params['rock_refinement_runs']):
@@ -84,7 +90,7 @@ class WorldGenerator:
         for i in range(world.width):
             for j in range(world.height):
 
-                if world.spawn_point != (i, j) and random.uniform(0, 1) < self.params['initial_tree_density'] and world.map_rock[i][j] != 1:
+                if random.uniform(0, 1) < self.params['initial_tree_density'] and world.map_rock[i][j] != 1:
                     world.map_tree[i][j] = 3
 
         for run in range(self.params['tree_refinement_runs']):
@@ -111,18 +117,10 @@ class WorldGenerator:
         counter = 0
 
         while len(possibilities) == 0:
-            world.map_tree = np.zeros((world.width, world.height))
             world.map_rock = np.zeros((world.width, world.height))
+            
             self.generate_rocks(world)
-            self.generate_trees(world)
-
-            for i in range(world.width):
-                for j in range(world.height):
-                    rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, self.params['base_clear_depth'])
-                    tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, self.params['base_clear_depth'])
-
-                    if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering) and not world.map_rock[i,j]:
-                            possibilities.append([i, j])
+            
 
             inv_map = 1 - world.map_rock
 
@@ -130,10 +128,22 @@ class WorldGenerator:
 
             if ncomponents > 1:
                 possibilities = []
+            else:
+                world.map_tree = np.zeros((world.width, world.height))
+                self.generate_trees(world)
+                for i in range(world.width):
+                    for j in range(world.height):
+                        rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, self.params['base_clear_depth'])
+                        tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, self.params['base_clear_depth'])
+
+                        if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering) and not world.map_rock[i,j]:
+                                possibilities.append([i, j])
+
 
             counter += 1
-            if self.params['initial_rock_density'] > 0.3 or counter > 200:
-                self.params['initial_rock_density'] -= 0.01
+            if self.params['initial_rock_density'] > 0.3 or counter > 30:
+                self.params['initial_rock_density'] -= 0.05
+                self.params['initial_tree_density'] -= 0.05
 
             if counter > 10000:
                 print("World generation parameters don't allow a base with a self.params['base_clear_depth'] of ", self.params['base_clear_depth'])
@@ -149,7 +159,7 @@ class WorldGenerator:
 
         for n_i in range(chosen_one[1] - self.params['base_clear_depth'], chosen_one[1] + self.params['base_clear_depth'] + 1):
             for n_j in range(chosen_one[0] - self.params['base_clear_depth'], chosen_one[0] + self.params['base_clear_depth'] + 1):
-                if n_i != chosen_one[1] and n_j != chosen_one[0]:
+                if n_i != chosen_one[1] or n_j != chosen_one[0]:
                     player_possibilities.append([n_i, n_j])
 
         chosen_one = random.choice(player_possibilities)
