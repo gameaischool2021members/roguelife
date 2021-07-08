@@ -7,6 +7,7 @@ import numpy as np
 import random
 import noise
 
+
 class World:
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
@@ -23,16 +24,16 @@ class World:
         self.map_rock = np.zeros((self.width, self.height))
         self.map_base = np.zeros((self.width, self.height))
 
-    def step(self, action):        
+    def step(self, action):
         if action == self.game.A_ATK:
-            self.arrows.append(Arrow((self.player.x, self.player.y), self.player.facing, self))    
+            self.arrows.append(Arrow((self.player.x, self.player.y), self.player.facing, self))
         else:
             self.player.move(action)
 
         for arrow in self.arrows:
             arrow.move()
         self.arrows = list(filter(lambda x: x.active, self.arrows))
-        
+
         n_enemies = len(self.enemies)
         for enemy_controller in self.enemies:
             enemy_controller.step()
@@ -55,6 +56,7 @@ class World:
         if pos[0] == self.player.x and pos[1] == self.player.y:
                 return False
         return pos[0] < self.height and pos[0] >= 0 and pos[1] >= 0 and pos[1] < self.width and not self.map_tree[pos[0]][pos[1]] and self.map_rock[pos[0]][pos[1]] != 1 and not self.map_base[pos[0]][pos[1]]
+
 
 class Character:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -81,7 +83,7 @@ class Character:
                 target_pos = (self.x, (self.y + 1))
             else:
                 self.facing = self.DIR_S
-        
+
         if action == self.world.game.A_LEFT:
             if self.facing == self.DIR_W:
                 target_pos = ((self.x - 1), self.y)
@@ -93,12 +95,13 @@ class Character:
                 target_pos = ((self.x + 1), self.y)
             else:
                 self.facing = self.DIR_E
-            
+
         if self.world.is_pos_free(target_pos):
             self.x, self.y = target_pos
             return None
         else:
             return target_pos
+
 
 class Arrow:
     DIR_S, DIR_W, DIR_N, DIR_E = range(4)
@@ -110,7 +113,7 @@ class Arrow:
         self.active = True
 
     def move(self):
-        if self.facing == Arrow.DIR_S: 
+        if self.facing == Arrow.DIR_S:
             self.y += 1
         if self.facing == Arrow.DIR_W:
             self.x -= 1
@@ -132,7 +135,8 @@ class Arrow:
             if self.x == enemy.x and self.y == enemy.y:
                 enemy.active = False
                 self.active = False
-            
+
+
 """
     def get_sprite(self):
         if self.facing == Arrow.DIR_S: 
