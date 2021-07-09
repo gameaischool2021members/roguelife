@@ -20,10 +20,16 @@ pillow
 scipy
 stable_baselines3
 ```
-## Screenshots
-![screenshot1](screenshot1.png)
-![screenshot2](screenshot2.png)
-![screenshot3](screenshot3.png)
+## Running
+
+#### Evolve Levels for the Rule Based Agents
+
+- Run the run_all.sh script. This will evolve a population of difficult maps for each one of the Rule Based Agents.
+
+#### Train the RL Agent against the environment
+
+- Run the run_dqn.py file with the --train argument and the name of the training session. Example: "python3 run_dqn.py --train Q01"
 
 ## Video
+
 [Training Montage](https://drive.google.com/file/d/1-C4bBehG-3zYwyCrGEYSs35uZPIEWhg0/view)
