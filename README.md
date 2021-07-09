@@ -9,6 +9,8 @@ More elaborated, this project is about pitting AI agents against a procedural le
 - Even Klemsdal 
 - Niels NTG Poldervaart
 
+## Architecture
+![Architecture](doc/arch.png)
 ## Dependencies
 ```
 pygame
