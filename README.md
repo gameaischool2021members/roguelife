@@ -1,6 +1,12 @@
 # Roguelife 💀
 The game that both plays and develops itself
 
+## Authors
+- Jonathan Jørgensen
+- Pedro M. Fernandes
+- Even Klemsdal 
+- Niels NTG Poldervaart
+
 ## Dependencies
 ```
 pygame
