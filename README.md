@@ -6,11 +6,18 @@ More elaborated, this project is about pitting AI agents against a procedural le
 ## Authors
 - Jonathan Jørgensen
 - Pedro M. Fernandes
-- Even Klemsdal 
+- Even Klemsdal
 - Niels NTG Poldervaart
 
 ## Architecture
 ![Architecture](doc/arch.png)
+
+## Running
+### Evolve Levels for the Rule Based Agents
+- Run the run_all.sh script. This will evolve a population of difficult maps for each one of the Rule Based Agents.
+### Train the RL Agent against the environment
+- Run the run_dqn.py file with the --train argument and the name of the training session. Example: "python3 run_dqn.py --train Q01"
+
 ## Dependencies
 ```
 pygame
@@ -20,6 +27,7 @@ pillow
 scipy
 stable_baselines3
 ```
+
 ## Screenshots
 <img src="./doc/screenshot1.png" width=30%/><img src="./doc/screenshot2.png" width=30%/><img src="./doc/screenshot3.png" width=30%/>
 
