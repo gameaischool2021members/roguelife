@@ -30,6 +30,11 @@ stable_baselines3
 
 - Run the run_dqn.py file with the --train argument and the name of the training session. Example: "python3 run_dqn.py --train Q01"
 
+## Screenshots
+![screenshot1](screenshot1.png)
+![screenshot2](screenshot2.png)
+![screenshot3](screenshot3.png)
+
 ## Video
 
 [Training Montage](https://drive.google.com/file/d/1-C4bBehG-3zYwyCrGEYSs35uZPIEWhg0/view)
