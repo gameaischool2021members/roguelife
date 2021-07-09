@@ -20,6 +20,10 @@ pillow
 scipy
 stable_baselines3
 ```
-## Video
+## Screenshots
+![screenshot1](screenshot1.png)
+![screenshot2](screenshot2.png)
+![screenshot3](screenshot3.png)
 
+## Video
 [Training Montage](https://drive.google.com/file/d/1-C4bBehG-3zYwyCrGEYSs35uZPIEWhg0/view)
