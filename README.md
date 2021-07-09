@@ -21,9 +21,7 @@ scipy
 stable_baselines3
 ```
 ## Screenshots
-![screenshot1](screenshot1.png)
-![screenshot2](screenshot2.png)
-![screenshot3](screenshot3.png)
+<img src="./doc/screenshot1.png" width=30%/><img src="./doc/screenshot2.png" width=30%/><img src="./doc/screenshot3.png" width=30%/>
 
 ## Video
 [Training Montage](https://drive.google.com/file/d/1-C4bBehG-3zYwyCrGEYSs35uZPIEWhg0/view)
