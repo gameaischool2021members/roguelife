@@ -33,3 +33,7 @@ stable_baselines3
 
 ## Video
 [Training Montage](https://drive.google.com/file/d/1-C4bBehG-3zYwyCrGEYSs35uZPIEWhg0/view)
+
+## Presentation Slides
+[Click here!](doc/roguelife_presentation.pdf)
+
