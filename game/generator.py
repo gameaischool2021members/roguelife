@@ -190,3 +190,106 @@ class WorldGenerator:
             world.enemies.append(EnemyController(Character(pos, world), world, self.params['enemies_crush_trees']))
 
         return world
+
+
+    def create_map_by_parameters(self, parameters, world):
+
+        self.params = parameters
+
+
+        possibilities = []
+
+        counter = 0
+
+        while len(possibilities) == 0:
+            world.map_rock = np.zeros((world.width, world.height))
+            
+            self.generate_rocks(world)
+            
+
+            inv_map = 1 - world.map_rock
+
+            labeled, ncomponents = label(inv_map)
+
+            if ncomponents > 1:
+                possibilities = []
+            else:
+                world.map_tree = np.zeros((world.width, world.height))
+                self.generate_trees(world)
+                for i in range(world.width):
+                    for j in range(world.height):
+                        rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, self.params['base_clear_depth'])
+                        tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, self.params['base_clear_depth'])
+
+                        if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering) and not world.map_rock[i,j]:
+                                possibilities.append([i, j])
+
+
+            counter += 1
+            if self.params['initial_rock_density'] > 0.3 or counter > 30:
+                self.params['initial_rock_density'] -= 0.05
+                self.params['initial_tree_density'] -= 0.05
+
+            if counter > 10000:
+                print("World generation parameters don't allow a base with a self.params['base_clear_depth'] of ", self.params['base_clear_depth'])
+                exit()
+
+        chosen_one = random.choice(possibilities)
+
+        world.map_base[chosen_one[0]][chosen_one[1]] = 10
+        
+        world.base_x, world.base_y = chosen_one 
+        
+        player_possibilities = []
+
+        for n_i in range(chosen_one[1] - self.params['base_clear_depth'], chosen_one[1] + self.params['base_clear_depth'] + 1):
+            for n_j in range(chosen_one[0] - self.params['base_clear_depth'], chosen_one[0] + self.params['base_clear_depth'] + 1):
+                if n_i != chosen_one[1] or n_j != chosen_one[0]:
+                    player_possibilities.append([n_i, n_j])
+
+        chosen_one = random.choice(player_possibilities)
+
+        world.player.y = chosen_one[0]
+        world.player.x = chosen_one[1]
+
+        return
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

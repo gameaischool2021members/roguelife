@@ -121,3 +121,8 @@ class Game(gym.Env):
         img_state = np.asarray(img_state)
         img_state = np.expand_dims(img_state, axis=0)
         return img_state
+
+
+
+
+
