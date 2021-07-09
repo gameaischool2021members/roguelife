@@ -74,13 +74,24 @@ if len(sys.argv) == 4 and sys.argv[1] == '--run':
     agent_class = agent_classes[sys.argv[2]]
     agent = agent_class(env)
     i = 0
+    reward_count = 0
+    reward_history = []
     while True:
-        state, _, done, _ = env.step(agent.act(state))
+        state, reward, done, _ = env.step(agent.act(state))
+        reward_count += reward
 
         if done:
+            reward_history.append(reward_count)
+            reward_count = 0
             env.reset()
             i += 1
             agent = agent_class(env)
             if i > 2000:
+                f = open('{}_reward.txt'.format(sys.argv[3]), 'a')
+                for value in reward_history:
+                    f.write('{}\n'.format(value))
+                f.close()
+
                 env.worldgen.save_log(sys.argv[3])
                 quit()
+            
