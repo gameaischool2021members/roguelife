@@ -10,9 +10,9 @@ import pygame
 
 
 
-initial_rock_density = 0.5
+initial_rock_density = 0.11742934933090575
 
-initial_tree_density = 0.0
+initial_tree_density = 0.27764483928496997
 
 rock_refinement_runs = 2
 
@@ -24,7 +24,7 @@ tree_neighbour_depth = 2
 
 rock_neighbour_number = 4
 
-tree_neighbour_number = 4
+tree_neighbour_number = 5
 
 base_clear_depth = 1
 

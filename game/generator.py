@@ -73,7 +73,7 @@ class WorldGenerator:
             for i in range(world.width):
                 for j in range(world.height):
                     neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, self.params['rock_neighbour_depth'])
-                    if (len(neighbors) >= self.params['rock_neighbour_number']) and world.spawn_point != (i, j):
+                    if (len(neighbors) >= self.params['rock_neighbour_number']):
                         to_add.append([i, j])
                     else:
                         to_remove.append([i,j])
@@ -98,7 +98,7 @@ class WorldGenerator:
             for i in range(world.width):
                 for j in range(world.height):
                     neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, self.params['tree_neighbour_depth'])
-                    if (len(neighbors) >= self.params['tree_neighbour_number']) and world.map_rock[i][j] != 1 and world.spawn_point != (i, j):
+                    if (len(neighbors) >= self.params['tree_neighbour_number']) and world.map_rock[i][j] != 1:
                         to_add.append([i, j])
                     else:
                         to_remove.append([i,j])
