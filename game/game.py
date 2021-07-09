@@ -115,6 +115,12 @@ class Game(gym.Env):
                                     pg.image.tostring(self.screen, "RGBA", False))
         return self.encode_state(pil_image)
 
+    def screenshot(self, name):
+        self.render()
+        pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
+                                    pg.image.tostring(self.screen, "RGBA", False))
+        pil_image.save('{}.png'.format(name))
+
     def encode_state(self, img_state):
         img_state = ImageOps.grayscale(img_state)
         img_state = ImageOps.scale(img_state, self.encoder_scale)
