@@ -3,7 +3,6 @@ from game.game import Game
 from evo.evo import EvoAlg
 from agents.rulebased import RuleBasedAgent0, RuleBasedAgent1, RuleBasedAgent2, RuleBasedAgent3
 import random 
-import random 
 import time
 import sys
 
@@ -56,6 +55,12 @@ gen_param_specs = {
     'enemies_crush_trees' : {
         'dtype' : bool
     }
+    ,
+    'random_seed' : {
+        'dtype' : int,
+        'min' : 1,
+        'max' : 9999
+    }
 }
 
 ea = EvoAlg(gen_param_specs)
@@ -69,6 +74,10 @@ agent_classes = {
     'R04' : RuleBasedAgent3
 }
 
+
+generations = 30
+
+run_limit = generations * ea.population_size
 
 if len(sys.argv) == 4 and sys.argv[1] == '--run':
     agent_class = agent_classes[sys.argv[2]]
@@ -86,7 +95,7 @@ if len(sys.argv) == 4 and sys.argv[1] == '--run':
             env.reset()
             i += 1
             agent = agent_class(env)
-            if i > 2000:
+            if i > run_limit:
                 f = open('{}_reward.txt'.format(sys.argv[3]), 'a')
                 for value in reward_history:
                     f.write('{}\n'.format(value))

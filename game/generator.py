@@ -20,11 +20,14 @@ class WorldGenerator:
         self.params = self.level_params[0].copy()
         self.fitness_scores = []
         self.log = []
+        self.generation = 0
     
     def register_fitness(self, fitness):
         self.fitness_scores.append(fitness)
         
         if len(self.fitness_scores) >= len(self.level_params):
+            self.generation += 1
+            print("Generation: ", self.generation)
             self.log.append({'population' : self.level_params.copy(), 'fitness' : self.fitness_scores.copy()})
             self.level_params = self.evo_system.get_new_generation(list(zip(self.level_params, self.fitness_scores)))
             self.fitness_scores = []
@@ -115,6 +118,8 @@ class WorldGenerator:
 
         counter = 0
 
+        random.seed(self.params['random_seed'])
+
         while len(possibilities) == 0:
             world.map_rock = np.zeros((world.width, world.height))
             
@@ -132,8 +137,8 @@ class WorldGenerator:
                 self.generate_trees(world)
                 for i in range(world.width):
                     for j in range(world.height):
-                        rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, self.params['base_clear_depth'])
-                        tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, self.params['base_clear_depth'])
+                        rock_neighbors, bordering = self.get_position_neighbours(world, world.map_rock, i, j, 1)
+                        tree_neighbors, bordering = self.get_position_neighbours(world, world.map_tree, i, j, 1)
 
                         if (len(rock_neighbors) == 0 and len(tree_neighbors) == 0) and (not bordering) and not world.map_rock[i,j]:
                                 possibilities.append([i, j])

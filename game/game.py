@@ -56,11 +56,7 @@ class Game(gym.Env):
 
 
         if done:
-            if not self.world.map_base[self.world.base_x][self.world.base_y]:
-                self.fitness += 1
-                print('Skeletons wins!')
-            else:
-                print('Player wins!')
+            self.fitness = len(self.world.enemies) - self.world.map_base[self.world.base_x][self.world.base_y]
             self.worldgen.register_fitness(self.fitness)
 
         self.render()
@@ -68,8 +64,8 @@ class Game(gym.Env):
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))
 
-        if reward > 0: 
-            print('reward={}!'.format(reward))
+        # if reward > 0: 
+        #     print('reward={}!'.format(reward))
 
         return self.encode_state(pil_image), reward, done, {}
 
@@ -110,6 +106,7 @@ class Game(gym.Env):
         self.render()
 
         self.step_count = 0
+        self.fitness = 0
 
         pil_image = Image.frombytes("RGBA", (self.scale * self.width, self.scale * self.height),
                                     pg.image.tostring(self.screen, "RGBA", False))

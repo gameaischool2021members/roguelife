@@ -10,21 +10,21 @@ import pygame
 
 
 
-initial_rock_density = 0.11742934933090575
+initial_rock_density = 0.2598124347988069
 
-initial_tree_density = 0.27764483928496997
+initial_tree_density = 0.24359774962985453
 
-rock_refinement_runs = 2
+rock_refinement_runs = 3
 
 tree_refinement_runs = 3
 
-rock_neighbour_depth = 1
+rock_neighbour_depth = 2
 
 tree_neighbour_depth = 2
 
-rock_neighbour_number = 4
+rock_neighbour_number = 8
 
-tree_neighbour_number = 5
+tree_neighbour_number = 7
 
 base_clear_depth = 1
 
@@ -97,6 +97,7 @@ agent = RuleBasedAgent2(env)
 state, _, done, _ = env.step(agent.act(state))
 
 while True:
+	
 	for event in pygame.event.get():
 
 		if event.type == pygame.KEYDOWN:

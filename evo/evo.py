@@ -5,9 +5,10 @@ class EvoAlg:
     def __init__(self, spec):
         # Tuning parameters
         self.spec = spec
-        self.population_size = 40
-        self.truncation_selection = int(self.population_size * .2)
-        self.mutation_rate = .01
+        self.population_size = 100
+        self.truncation_selection = int(self.population_size * .3)
+        self.mutation_rate = .05
+        self.generation = 0
 
     # For the first batch
     def get_initial_population(self):
@@ -26,6 +27,8 @@ class EvoAlg:
 
     def get_new_generation(self, population):
         population.sort(reverse=True, key=lambda x: x[1])
+        # print("Population: ", population)
+        # print("POP1: ", population[0])
         
         # Select best and strip off fitness
         parents = [x[0] for x in population[:self.truncation_selection]]
@@ -62,8 +65,9 @@ if __name__ == '__main__':
     })
     pop = ea.get_initial_population()
 
-    for _ in range(100):
+    for geni in range(100):
+        print("Generation: ", geni)
         pop_fit = fitness_function(pop)
-        max_fit = max([i[1] for i in pop_fit])
-        print(max_fit)
+        avg_fit = sum([i[1] for i in pop_fit])/len(pop_fit)
+        print("Average Fitness: ", avg_fit)
         pop = ea.get_new_generation(pop_fit)

@@ -32,14 +32,14 @@ class World:
             arrow.move()
         self.arrows = list(filter(lambda x: x.active, self.arrows))
 
-        n_enemies = len(self.enemies)
+        old_reward = len(self.enemies) - self.map_base[self.base_x][self.base_y]
         for enemy_controller in self.enemies:
             if enemy_controller.buried_steps and enemy_controller.character.x == self.player.x and enemy_controller.character.y == self.player.y:
                 enemy_controller.character.active = False
             else:
                 enemy_controller.step()
         self.enemies = list(filter(lambda x: x.character.active, self.enemies))
-        reward = n_enemies - len(self.enemies)
+        reward = old_reward - (len(self.enemies) - self.map_base[self.base_x][self.base_y])
 
         if not self.map_base[self.base_x][self.base_y] or not len(self.enemies):
             done = True

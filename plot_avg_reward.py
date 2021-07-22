@@ -3,9 +3,9 @@ import matplotlib.pyplot as plt
 import sys
 
 data_id = sys.argv[1]
-frame_size = 40
+frame_size = 100
 with open('{}_reward.txt'.format(data_id)) as f:
-    rewards = [int(line)for line in f.readlines()]
+    rewards = [float(line)for line in f.readlines()]
     avg_rewards = []
     tmp = 0
     for i, val in enumerate(rewards):
