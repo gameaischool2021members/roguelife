@@ -24,5 +24,5 @@ fig = plt.figure(1)
 for key in phistories:
     plt.plot(phistories[key], label=key)
 plt.legend(loc='center left', bbox_to_anchor=(1, .5))
-
+plt.title('{} evolution'.format(data_id))
 fig.savefig('{}_plot'.format(data_id), bbox_inches='tight')

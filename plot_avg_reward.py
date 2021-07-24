@@ -15,5 +15,5 @@ with open('{}_reward.txt'.format(data_id)) as f:
             tmp = 0
         
     plt.plot(avg_rewards)
-
+    plt.title('{} reward'.format(data_id))
     plt.savefig('{}_reward_plot'.format(data_id))
