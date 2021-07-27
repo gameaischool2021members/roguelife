@@ -5,7 +5,7 @@ class EvoAlg:
     def __init__(self, spec):
         # Tuning parameters
         self.spec = spec
-        self.population_size = 1000
+        self.population_size = 100
         self.truncation_selection = int(self.population_size * .3)
         self.mutation_rate = .05
         self.generation = 0

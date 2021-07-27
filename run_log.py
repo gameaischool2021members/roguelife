@@ -1,7 +1,7 @@
 
 from game.game import Game
 from evo.evo import EvoAlg
-from agents.rulebased import RuleBasedAgent0, RuleBasedAgent1, RuleBasedAgent2, RuleBasedAgent3
+from agents.rulebased import RuleBasedAgent0, RuleBasedAgent1, RuleBasedAgent2, RuleBasedAgent3, RandomAgent
 import random 
 import time
 import sys
@@ -71,11 +71,12 @@ agent_classes = {
     'R01' : RuleBasedAgent0,
     'R02' : RuleBasedAgent1,
     'R03' : RuleBasedAgent2,
-    'R04' : RuleBasedAgent3
+    'R04' : RuleBasedAgent3,
+    'RR' : RandomAgent
 }
 
 
-generations = 100
+generations = 30
 
 run_limit = generations * ea.population_size
 

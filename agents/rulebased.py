@@ -259,6 +259,15 @@ class RuleBasedAgent3: #The Mad Man
 
 
 
+class RandomAgent: #Random Actions
+    def __init__(self, env):
+        self.env = env
+
+    def act(self, state):
+            
+        return random.choice(range(6))
+
+
 
 
 
