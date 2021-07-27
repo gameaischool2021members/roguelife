@@ -75,7 +75,7 @@ agent_classes = {
 }
 
 
-generations = 30
+generations = 100
 
 run_limit = generations * ea.population_size
 
