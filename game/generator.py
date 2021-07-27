@@ -192,7 +192,7 @@ class WorldGenerator:
             pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
             while not world.is_pos_free(pos):
                 pos = (random.randint(0, world.width - 1), random.randint(0, world.height - 1))
-            world.enemies.append(EnemyController(Character(pos, world), world, self.params['enemies_crush_trees']))
+            world.enemies.append(EnemyController(Character(pos, world), world, self.params['enemies_crush_trees'], self.params['flee_distance']))
 
         return world
 

@@ -60,6 +60,11 @@ gen_param_specs = {
         'dtype' : int,
         'min' : 1,
         'max' : 9999
+    },
+    'flee_distance' : {
+        'dtype' : int,
+        'min' : 0,
+        'max' : 10
     }
 }
 
