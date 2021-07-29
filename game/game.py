@@ -13,7 +13,7 @@ class Game(gym.Env):
     A_NOP, A_UP, A_DOWN, A_LEFT, A_RIGHT, A_ATK = range(6)
 
     def __init__(self, evo_system=None):
-        self.framerate = 0
+        self.framerate = 10
         self.width, self.height = (15, 15)
         self.scale = 32
         self.encoder_scale = 1 / 4
