@@ -30,6 +30,10 @@ base_clear_depth = 1
 
 enemies_crush_trees = True
 
+random_seed = random.randint(1, 9999)
+
+flee_distance = 0
+
 
 
 
@@ -82,6 +86,16 @@ gen_param_specs = {
     },
     'enemies_crush_trees' : {
         'dtype' : bool
+    },
+    'random_seed' : {
+        'dtype' : int,
+        'min' : 1,
+        'max' : 9999
+    },
+    'flee_distance' : {
+        'dtype' : int,
+        'min' : flee_distance,
+        'max' : flee_distance
     }
 }
 
@@ -103,6 +117,7 @@ while True:
 		if event.type == pygame.KEYDOWN:
 
 			if event.key == ord(' '):
+
 
 				ea = EvoAlg(gen_param_specs)
 				env = Game(evo_system=ea)

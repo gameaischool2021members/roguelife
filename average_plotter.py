@@ -112,19 +112,14 @@ for i in range(len(agent_types)):
 				
 				agent_class = agent_classes[agent_types[j]]
 				agent = agent_class(env)
-				i = 0
 				reward_count = 0
 				while True:
 					state, reward, done, _ = env.step(agent.act(state))
 					reward_count += reward
 
 					if done:
-						env.reset()
-						i += 1
-						agent = agent_class(env)
-						if i >= run_limit:
-							#print(reward_count)
-							break
+						#print(reward_count)
+						break
 				sum_reward += reward_count
 
 
