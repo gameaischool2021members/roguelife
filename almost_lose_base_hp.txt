@@ -1,0 +1,59 @@
+Levels Generated for R01:
+
+Fitness of R01:
+Average base hp for run  0  :  1.63
+Total average base hp over the  1  runs:  1.63
+Fitness of R02:
+Average base hp for run  0  :  2.34
+Total average base hp over the  1  runs:  2.34
+Fitness of R03:
+Average base hp for run  0  :  0.64
+Total average base hp over the  1  runs:  0.64
+Fitness of R04:
+Average base hp for run  0  :  0.88
+Total average base hp over the  1  runs:  0.88
+
+Levels Generated for R02:
+
+Fitness of R01:
+Average base hp for run  0  :  2.78
+Total average base hp over the  1  runs:  2.78
+Fitness of R02:
+Average base hp for run  0  :  1.5
+Total average base hp over the  1  runs:  1.5
+Fitness of R03:
+Average base hp for run  0  :  7.76
+Total average base hp over the  1  runs:  7.76
+Fitness of R04:
+Average base hp for run  0  :  0.22
+Total average base hp over the  1  runs:  0.22
+
+Levels Generated for R03:
+
+Fitness of R01:
+Average base hp for run  0  :  1.49
+Total average base hp over the  1  runs:  1.49
+Fitness of R02:
+Average base hp for run  0  :  0.98
+Total average base hp over the  1  runs:  0.98
+Fitness of R03:
+Average base hp for run  0  :  1.93
+Total average base hp over the  1  runs:  1.93
+Fitness of R04:
+Average base hp for run  0  :  9.02
+Total average base hp over the  1  runs:  9.02
+
+Levels Generated for R04:
+
+Fitness of R01:
+Average base hp for run  0  :  2.22
+Total average base hp over the  1  runs:  2.22
+Fitness of R02:
+Average base hp for run  0  :  2.15
+Total average base hp over the  1  runs:  2.15
+Fitness of R03:
+Average base hp for run  0  :  2.43
+Total average base hp over the  1  runs:  2.43
+Fitness of R04:
+Average base hp for run  0  :  1.62
+Total average base hp over the  1  runs:  1.62

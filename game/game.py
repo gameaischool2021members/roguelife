@@ -56,7 +56,13 @@ class Game(gym.Env):
 
 
         if done:
-            self.fitness = len(self.world.enemies) - self.world.map_base[self.world.base_x][self.world.base_y]
+            #self.fitness = len(self.world.enemies) - self.world.map_base[self.world.base_x][self.world.base_y]
+            self.fitness = 0
+            if self.world.map_base[self.world.base_x][self.world.base_y] > 0:
+                self.fitness = 1 - self.world.map_base[self.world.base_x][self.world.base_y]
+            else:
+                self.fitness = -10
+
             self.worldgen.register_fitness(self.fitness)
 
         self.render()

@@ -22,7 +22,7 @@ agent_classes = {
 agent_plot_files = []
 
 for agent in agent_types:
-	agent_plot_files.append(glob.glob("./Plots/" + agent + "*log.txt"))
+	agent_plot_files.append(glob.glob("./Plots/almost_lose/" + agent + "*log.txt"))
 
 
 print(agent_plot_files)
@@ -118,6 +118,7 @@ for i in range(len(agent_types)):
 					reward_count += reward
 
 					if done:
+						reward_count = env.world.map_base[env.world.base_x][env.world.base_y]
 						#print(reward_count)
 						break
 				sum_reward += reward_count

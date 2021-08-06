@@ -1,0 +1,86 @@
+Levels Generated for R01:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  -3.44
+Total average reward over the  1  runs:  -3.44
+Fitness of R02:
+
+Average reward for run  0  :  -3.27
+Total average reward over the  1  runs:  -3.27
+Fitness of R03:
+
+Average reward for run  0  :  -5.87
+Total average reward over the  1  runs:  -5.87
+Fitness of R04:
+
+Average reward for run  0  :  -5.44
+Total average reward over the  1  runs:  -5.44
+
+
+Levels Generated for R02:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  -2.96
+Total average reward over the  1  runs:  -2.96
+Fitness of R02:
+
+Average reward for run  0  :  -3.56
+Total average reward over the  1  runs:  -3.56
+Fitness of R03:
+
+Average reward for run  0  :  2.64
+Total average reward over the  1  runs:  2.64
+Fitness of R04:
+
+Average reward for run  0  :  -7.55
+Total average reward over the  1  runs:  -7.55
+
+
+Levels Generated for R03:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  -5.22
+Total average reward over the  1  runs:  -5.22
+Fitness of R02:
+
+Average reward for run  0  :  -5.67
+Total average reward over the  1  runs:  -5.67
+Fitness of R03:
+
+Average reward for run  0  :  -3.25
+Total average reward over the  1  runs:  -3.25
+Fitness of R04:
+
+Average reward for run  0  :  3.87
+Total average reward over the  1  runs:  3.87
+
+
+Levels Generated for R04:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  -2.89
+Total average reward over the  1  runs:  -2.89
+Fitness of R02:
+
+Average reward for run  0  :  -2.92
+Total average reward over the  1  runs:  -2.92
+Fitness of R03:
+
+Average reward for run  0  :  -2.66
+Total average reward over the  1  runs:  -2.66
+Fitness of R04:
+
+Average reward for run  0  :  -3.54
+Total average reward over the  1  runs:  -3.54
