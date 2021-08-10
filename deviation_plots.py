@@ -13,7 +13,7 @@ agent_reward_files = []
 
 
 for agent in agent_types:
-    agent_reward_files.append(glob.glob("./Plots/" + agent + "*reward.txt"))
+    agent_reward_files.append(glob.glob("./Plots_S/S" + agent + "*reward.txt"))
 
 all_agents_rewards_list = []
 
@@ -92,8 +92,8 @@ for agent_num in range(len(agent_types)):
     plt.legend()
 axes = plt.gca()
 axes.set_ylim([-10,2])
-plt.title("Average Reward for All Agents")
-plt.savefig("average_reward_all")
+plt.title("Average Reward for all Agents (\"Hardcore\" Scenario) Evolving Only Seed")
+plt.savefig("average_reward_all_seed_only")
     #plt.clf()
 
 

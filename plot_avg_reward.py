@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import sys
 
 data_id = sys.argv[1]
-frame_size = 100
+frame_size = 1000
 with open('{}_reward.txt'.format(data_id)) as f:
     rewards = [float(line)for line in f.readlines()]
     avg_rewards = []
@@ -12,6 +12,7 @@ with open('{}_reward.txt'.format(data_id)) as f:
         tmp += val
         if i > 0 and i % frame_size == 0:
             avg_rewards.append(tmp / frame_size)
+            print("Average Reward: ", tmp / frame_size)
             tmp = 0
         
     plt.plot(avg_rewards)

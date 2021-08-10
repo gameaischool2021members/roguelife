@@ -74,7 +74,7 @@ class RandomEvo:
     def __init__(self, spec):
         # Tuning parameters
         self.spec = spec
-        self.population_size = 100
+        self.population_size = 1000
 
 
     # For the first batch
@@ -118,7 +118,7 @@ agent_classes = {
 }
 
 
-generations = 30
+generations = 1
 
 run_limit = generations * ea.population_size
 
