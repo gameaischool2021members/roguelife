@@ -56,6 +56,7 @@ class Game(gym.Env):
 
 
         if done:
+            #self.fitness = self.world.map_base[self.world.base_x][self.world.base_y] - len(self.world.enemies)
             #self.fitness = len(self.world.enemies) - self.world.map_base[self.world.base_x][self.world.base_y]
             self.fitness = 0
             if self.world.map_base[self.world.base_x][self.world.base_y] > 0:

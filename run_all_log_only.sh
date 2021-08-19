@@ -1,9 +1,8 @@
-
-python run_log.py --run R01 Plots/almost_lose/R01_1
-
-python run_log.py --run R02 Plots/almost_lose/R02_1
-
-python run_log.py --run R03 Plots/almost_lose/R03_1
-
-python run_log.py --run R04 Plots/almost_lose/R04_1
-
+#!/bin/bash
+for i in {1..5}
+do
+    python run_log_bhp.py --run R01 Plots/bhp/R01_$i
+    python run_log_bhp.py --run R02 Plots/bhp/R02_$i
+    python run_log_bhp.py --run R03 Plots/bhp/R03_$i
+    python run_log_bhp.py --run R04 Plots/bhp/R04_$i
+done

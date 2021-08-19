@@ -79,7 +79,6 @@ agent_classes = {
     'RR' : RandomAgent
 }
 
-
 generations = 30
 
 run_limit = generations * ea.population_size

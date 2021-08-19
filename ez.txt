@@ -1,0 +1,310 @@
+Levels Generated for R01:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  9.47
+Average reward for run  1  :  8.77
+Average reward for run  2  :  9.13
+Average reward for run  3  :  9.71
+Average reward for run  4  :  9.67
+Average reward for run  5  :  9.22
+Average reward for run  6  :  9.57
+Average reward for run  7  :  9.86
+Average reward for run  8  :  9.47
+Average reward for run  9  :  9.6
+Average reward for run  10  :  9.29
+Average reward for run  11  :  9.31
+Average reward for run  12  :  9.19
+Average reward for run  13  :  9.21
+Average reward for run  14  :  9.38
+Total average reward over the  15  runs:  9.389999999999999
+Fitness of R02:
+
+Average reward for run  0  :  4.65
+Average reward for run  1  :  3.51
+Average reward for run  2  :  6.22
+Average reward for run  3  :  5.12
+Average reward for run  4  :  1.48
+Average reward for run  5  :  6.75
+Average reward for run  6  :  4.38
+Average reward for run  7  :  5.97
+Average reward for run  8  :  6.02
+Average reward for run  9  :  4.87
+Average reward for run  10  :  7.14
+Average reward for run  11  :  3.62
+Average reward for run  12  :  8.83
+Average reward for run  13  :  5.68
+Average reward for run  14  :  6.18
+Total average reward over the  15  runs:  5.361333333333333
+Fitness of R03:
+
+Average reward for run  0  :  7.96
+Average reward for run  1  :  8.88
+Average reward for run  2  :  9.13
+Average reward for run  3  :  9.73
+Average reward for run  4  :  9.68
+Average reward for run  5  :  5.71
+Average reward for run  6  :  8.48
+Average reward for run  7  :  9.39
+Average reward for run  8  :  9.31
+Average reward for run  9  :  9.04
+Average reward for run  10  :  9.08
+Average reward for run  11  :  6.52
+Average reward for run  12  :  9.15
+Average reward for run  13  :  9.15
+Average reward for run  14  :  9.58
+Total average reward over the  15  runs:  8.719333333333335
+Fitness of R04:
+
+Average reward for run  0  :  6.22
+Average reward for run  1  :  8.09
+Average reward for run  2  :  6.08
+Average reward for run  3  :  9.1
+Average reward for run  4  :  9.68
+Average reward for run  5  :  3.7
+Average reward for run  6  :  9.18
+Average reward for run  7  :  6.51
+Average reward for run  8  :  9.55
+Average reward for run  9  :  8.65
+Average reward for run  10  :  4.75
+Average reward for run  11  :  7.17
+Average reward for run  12  :  9.42
+Average reward for run  13  :  6.16
+Average reward for run  14  :  6.46
+Total average reward over the  15  runs:  7.381333333333333
+
+
+Levels Generated for R02:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  4.17
+Average reward for run  1  :  6.2
+Average reward for run  2  :  7.12
+Average reward for run  3  :  8.97
+Average reward for run  4  :  7.61
+Average reward for run  5  :  3.69
+Average reward for run  6  :  7.9
+Average reward for run  7  :  8.93
+Average reward for run  8  :  4.89
+Average reward for run  9  :  9.19
+Average reward for run  10  :  5.62
+Average reward for run  11  :  6.1
+Average reward for run  12  :  7.31
+Average reward for run  13  :  8.65
+Average reward for run  14  :  8.03
+Total average reward over the  15  runs:  6.958666666666668
+Fitness of R02:
+
+Average reward for run  0  :  9.19
+Average reward for run  1  :  9.56
+Average reward for run  2  :  8.97
+Average reward for run  3  :  9.46
+Average reward for run  4  :  9.01
+Average reward for run  5  :  9.28
+Average reward for run  6  :  8.89
+Average reward for run  7  :  9.53
+Average reward for run  8  :  8.94
+Average reward for run  9  :  9.33
+Average reward for run  10  :  9.54
+Average reward for run  11  :  8.77
+Average reward for run  12  :  9.07
+Average reward for run  13  :  8.94
+Average reward for run  14  :  9.17
+Total average reward over the  15  runs:  9.176666666666666
+Fitness of R03:
+
+Average reward for run  0  :  9.37
+Average reward for run  1  :  9.36
+Average reward for run  2  :  9.22
+Average reward for run  3  :  3.64
+Average reward for run  4  :  9.06
+Average reward for run  5  :  6.81
+Average reward for run  6  :  9.4
+Average reward for run  7  :  8.4
+Average reward for run  8  :  7.42
+Average reward for run  9  :  8.7
+Average reward for run  10  :  8.82
+Average reward for run  11  :  8.65
+Average reward for run  12  :  9.24
+Average reward for run  13  :  9.09
+Average reward for run  14  :  9.41
+Total average reward over the  15  runs:  8.439333333333334
+Fitness of R04:
+
+Average reward for run  0  :  9.75
+Average reward for run  1  :  8.55
+Average reward for run  2  :  7.96
+Average reward for run  3  :  3.15
+Average reward for run  4  :  8.93
+Average reward for run  5  :  8.21
+Average reward for run  6  :  9.13
+Average reward for run  7  :  8.62
+Average reward for run  8  :  7.19
+Average reward for run  9  :  9.78
+Average reward for run  10  :  9.6
+Average reward for run  11  :  8.97
+Average reward for run  12  :  8.85
+Average reward for run  13  :  9.46
+Average reward for run  14  :  8.72
+Total average reward over the  15  runs:  8.458
+
+
+Levels Generated for R03:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  8.19
+Average reward for run  1  :  7.53
+Average reward for run  2  :  8.66
+Average reward for run  3  :  5.4
+Average reward for run  4  :  7.42
+Average reward for run  5  :  7.84
+Average reward for run  6  :  4.53
+Average reward for run  7  :  8.46
+Average reward for run  8  :  6.14
+Average reward for run  9  :  7.01
+Average reward for run  10  :  7.31
+Average reward for run  11  :  4.63
+Average reward for run  12  :  8.88
+Average reward for run  13  :  7.0
+Average reward for run  14  :  8.21
+Total average reward over the  15  runs:  7.147333333333334
+Fitness of R02:
+
+Average reward for run  0  :  5.61
+Average reward for run  1  :  8.68
+Average reward for run  2  :  6.57
+Average reward for run  3  :  3.99
+Average reward for run  4  :  6.04
+Average reward for run  5  :  2.88
+Average reward for run  6  :  2.99
+Average reward for run  7  :  4.81
+Average reward for run  8  :  4.17
+Average reward for run  9  :  4.89
+Average reward for run  10  :  4.43
+Average reward for run  11  :  5.09
+Average reward for run  12  :  7.53
+Average reward for run  13  :  7.46
+Average reward for run  14  :  5.25
+Total average reward over the  15  runs:  5.359333333333334
+Fitness of R03:
+
+Average reward for run  0  :  9.61
+Average reward for run  1  :  9.72
+Average reward for run  2  :  9.78
+Average reward for run  3  :  9.45
+Average reward for run  4  :  9.55
+Average reward for run  5  :  9.38
+Average reward for run  6  :  9.8
+Average reward for run  7  :  9.35
+Average reward for run  8  :  9.47
+Average reward for run  9  :  9.54
+Average reward for run  10  :  9.31
+Average reward for run  11  :  9.35
+Average reward for run  12  :  9.74
+Average reward for run  13  :  9.23
+Average reward for run  14  :  9.9
+Total average reward over the  15  runs:  9.545333333333334
+Fitness of R04:
+
+Average reward for run  0  :  7.86
+Average reward for run  1  :  9.45
+Average reward for run  2  :  8.39
+Average reward for run  3  :  9.37
+Average reward for run  4  :  7.19
+Average reward for run  5  :  5.88
+Average reward for run  6  :  7.8
+Average reward for run  7  :  9.02
+Average reward for run  8  :  7.7
+Average reward for run  9  :  8.35
+Average reward for run  10  :  7.93
+Average reward for run  11  :  9.09
+Average reward for run  12  :  9.76
+Average reward for run  13  :  7.24
+Average reward for run  14  :  8.07
+Total average reward over the  15  runs:  8.206666666666667
+
+
+Levels Generated for R04:
+
+
+
+Fitness of R01:
+
+Average reward for run  0  :  2.79
+Average reward for run  1  :  6.08
+Average reward for run  2  :  5.51
+Average reward for run  3  :  7.2
+Average reward for run  4  :  6.62
+Average reward for run  5  :  6.65
+Average reward for run  6  :  8.04
+Average reward for run  7  :  8.1
+Average reward for run  8  :  6.65
+Average reward for run  9  :  6.13
+Average reward for run  10  :  5.81
+Average reward for run  11  :  5.47
+Average reward for run  12  :  5.96
+Average reward for run  13  :  6.46
+Average reward for run  14  :  4.31
+Total average reward over the  15  runs:  6.118666666666666
+Fitness of R02:
+
+Average reward for run  0  :  3.13
+Average reward for run  1  :  6.19
+Average reward for run  2  :  5.41
+Average reward for run  3  :  6.71
+Average reward for run  4  :  5.94
+Average reward for run  5  :  7.67
+Average reward for run  6  :  6.94
+Average reward for run  7  :  4.77
+Average reward for run  8  :  8.41
+Average reward for run  9  :  4.69
+Average reward for run  10  :  6.95
+Average reward for run  11  :  2.46
+Average reward for run  12  :  6.92
+Average reward for run  13  :  5.13
+Average reward for run  14  :  3.45
+Total average reward over the  15  runs:  5.651333333333333
+Fitness of R03:
+
+Average reward for run  0  :  8.18
+Average reward for run  1  :  9.57
+Average reward for run  2  :  6.53
+Average reward for run  3  :  7.17
+Average reward for run  4  :  8.14
+Average reward for run  5  :  7.31
+Average reward for run  6  :  6.64
+Average reward for run  7  :  9.38
+Average reward for run  8  :  9.11
+Average reward for run  9  :  8.02
+Average reward for run  10  :  8.22
+Average reward for run  11  :  6.13
+Average reward for run  12  :  8.27
+Average reward for run  13  :  5.11
+Average reward for run  14  :  8.17
+Total average reward over the  15  runs:  7.7299999999999995
+Fitness of R04:
+
+Average reward for run  0  :  9.5
+Average reward for run  1  :  9.56
+Average reward for run  2  :  8.79
+Average reward for run  3  :  9.27
+Average reward for run  4  :  9.31
+Average reward for run  5  :  9.6
+Average reward for run  6  :  9.51
+Average reward for run  7  :  9.8
+Average reward for run  8  :  9.1
+Average reward for run  9  :  9.76
+Average reward for run  10  :  9.5
+Average reward for run  11  :  9.85
+Average reward for run  12  :  9.8
+Average reward for run  13  :  9.97
+Average reward for run  14  :  9.76
+Total average reward over the  15  runs:  9.538666666666666

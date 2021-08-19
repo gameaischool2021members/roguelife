@@ -14,15 +14,15 @@ agent_classes = {
 	'R01' : RuleBasedAgent0,
 	'R02' : RuleBasedAgent1,
 	'R03' : RuleBasedAgent2,
-	'R04' : RuleBasedAgent3,
-	'RR' : RandomAgent
+	'R04' : RuleBasedAgent3#,
+#	'RR' : RandomAgent
 }
 
 
 agent_plot_files = []
 
 for agent in agent_types:
-	agent_plot_files.append(glob.glob("./Plots/almost_lose/" + agent + "*log.txt"))
+	agent_plot_files.append(glob.glob("./Plots/close_call/" + agent + "*log.txt"))
 
 
 print(agent_plot_files)
@@ -118,7 +118,7 @@ for i in range(len(agent_types)):
 					reward_count += reward
 
 					if done:
-						reward_count = env.world.map_base[env.world.base_x][env.world.base_y]
+						#reward_count = env.world.map_base[env.world.base_x][env.world.base_y]
 						#print(reward_count)
 						break
 				sum_reward += reward_count
